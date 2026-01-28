@@ -1,0 +1,155 @@
+{
+  "SeriesPrefix": "XY",
+  "PixelSize_um": 0.68,
+  "FrameInterval_s": 600.0,
+  "Read": {
+    "SelectXYs": [],
+    "Z": 1,
+    "CList": [1, 2],
+    "CNames": ["640", "488"],
+    "CType": ["inner", "inner"],
+    "RefC": 1,
+    "OtherC": []
+  },
+  "Fuse": {
+    "Pair": {
+      "MaxDist_um": 1,
+      "UseIoU": true,
+      "MinIoU": 0.05
+    }
+  },
+  "Detect": {
+    "MinMajor_um": 5,
+    "MaxMajor_um": 80,
+    "SuppressCloseOnMem": true,
+    "SuppressDist_um": 2,
+    "Opts": {
+      "bin": {
+        "sigma": 1.5,
+        "sensitivity": 0.1,
+        "adapt_sensitivity": 0.1,
+        "minHoleArea": 10
+      },
+      "inner": {
+        "areaOpen": 150
+      },
+      "split": {
+        "doSplit": true,
+        "openR": 2,
+        "splitH": 2.0
+      },
+      "band": {
+        "width_px": 5
+      },
+      "mem": {
+        "thickR": 5,
+        "smoothR": 2
+      },
+      "debug": {
+        "makeFigure": false
+      }
+    }
+  },
+  "Post": {
+    "Watershed": {
+      "Enable": true,
+      "Tau": 0.5,
+      "hLow": 0.5,
+      "hHigh": 2.0,
+      "SigmaD": 1.0,
+      "MinAreaPx": 100,
+      "MarginPx": 4,
+      "MaxChild": 10
+    }
+  },
+  "Track": {
+    "DistGate_um": 10,
+    "MaxGap": 2,
+    "MinLen": 10,
+    "Opts": {
+      "DistGate_um": 10,
+      "MaxGap": 2,
+      "MinLen": 10,
+      "EstimateGlobalDrift": true,
+      "IoUUseFilledMask": true
+    }
+  },
+  "Output": {
+    "SavePerFrameMAT": true,
+    "SaveImgInFrameMAT": false,
+    "SaveFrameStore": true,
+    "FrameStoreName": "FrameStore.h5",
+    "FrameStoreDeflate": 1,
+    "FrameStoreMode": "ref",
+    "SaveTracksMAT": true,
+    "SaveCSV": false
+  },
+  "Debug": {
+    "Enable": true,
+    "SingleXYOnly": false,
+    "MaxFrames": [],
+    "SaveFramePNG": false,
+    "SaveFuseLog": true,
+    "SaveVideo": true,
+    "VideoFPS": 10,
+    "VideoShowC": 1,
+    "TailLen": 5,
+    "ShowMemBand": true,
+    "ShowMemMask": false,
+    "SaveVideoBoth": true,
+    "ShowOutline": true,
+    "OutlineColor": "y",
+    "OutlineLineWidth": 1.2,
+    "Verbose": true
+  },
+  "Parallel": {
+    "Enable": false,
+    "PoolSize": [10]
+  },
+  "Compute": {
+    "Enable": false,
+    "Z": 1,
+    "Channel": 1,
+    "PixelSize_um": 0.68,
+    "n_keep": 12,
+    "IDs": [],
+    "SaveMAT": true,
+    "ExportCSV": true
+  },
+  "Video": {
+    "Enable": false,
+    "When": "after",
+    "Format": "avi",
+    "FPS": 10,
+    "Quality": 100,
+    "Tasks": ["Merge"],
+    "SeriesList": [],
+    "UseFrameStoreOnly": false,
+    "OutputSubdir": "Video",
+    "Contrast": {
+      "C1": [],
+      "C2": []
+    },
+    "Color": {
+      "C1": [1, 0, 0],
+      "C2": [0, 1, 0]
+    },
+    "ScaleBar": {
+      "Enable": true,
+      "Length_um": 50,
+      "Thickness_px": 3,
+      "Position": [800, 800],
+      "FontSize": 36,
+      "Color": [1, 1, 1]
+    },
+    "TimeStamp": {
+      "Enable": true,
+      "StartFrame": 1,
+      "Interval_s": 600.0,
+      "Position": [20, 30],
+      "FontSize": 48,
+      "Color": [1, 1, 1],
+      "Unit": "min"
+    }
+  }
+}

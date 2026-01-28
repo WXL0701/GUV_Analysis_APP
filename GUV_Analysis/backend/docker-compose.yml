@@ -1,0 +1,114 @@
+services:
+  redis:
+    image: redis:7
+    ports: ["6379:6379"]
+    command: ["redis-server", "--appendonly", "yes"]
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: lab
+      POSTGRES_PASSWORD: labpass
+      POSTGRES_DB: lab_analysis
+      TZ: Asia/Shanghai
+    ports: ["5432:5432"]
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+
+  # minio:
+  #   image: minio/minio:latest
+  #   environment:
+  #     MINIO_ROOT_USER: minioadmin
+  #     MINIO_ROOT_PASSWORD: minioadminpassword
+  #   command: server /data --console-address ":9001"
+  #   ports:
+  #     - "9000:9000"  # S3 API
+  #     - "9001:9001"  # Console
+  #   volumes:
+  #     - ./data/miniodata:/data
+
+  # Backend API Service
+  backend:
+    build: .
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/app
+      - ../data/tasks:/app/data/tasks
+      - ../../MATLAB_Package:/app/matlab_packages
+      - ../../../bfmatlab:/home/guv_Analysis/bfmatlab:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "8000:8000"
+    depends_on:
+      - redis
+      - postgres
+      # - minio
+    environment:
+      - TZ=Asia/Shanghai
+      - POSTGRES_SERVER=postgres
+      - REDIS_HOST=redis
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+      - MINIO_BUCKET=${MINIO_BUCKET}
+      - MINIO_SECURE=${MINIO_SECURE}
+      - DATABASE_URL=postgresql+psycopg://lab:labpass@postgres:5432/lab_analysis
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - RUN_BASE_DIR=/app/data/tasks
+      - PIPELINE_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.1.2
+      - IMAGE_PROCESSOR_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.2
+
+  # Celery Worker for background tasks
+  celery_worker:
+    build: .
+    command: celery -A app.worker.celery_app worker --loglevel=info --concurrency=1
+    volumes:
+      - .:/app
+      - ../data/tasks:/app/data/tasks
+      - ../../MATLAB_Package:/app/matlab_packages
+      - /usr/local/MATLAB:/usr/local/MATLAB:ro
+      - ../../../bfmatlab:/home/guv_Analysis/bfmatlab:ro
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - redis
+      - postgres
+      # - minio
+    environment:
+      - TZ=Asia/Shanghai
+      - POSTGRES_SERVER=postgres
+      - REDIS_HOST=redis
+      - MINIO_ENDPOINT=${MINIO_ENDPOINT}
+      - MINIO_ACCESS_KEY=${MINIO_ACCESS_KEY}
+      - MINIO_SECRET_KEY=${MINIO_SECRET_KEY}
+      - MINIO_BUCKET=${MINIO_BUCKET}
+      - MINIO_SECURE=${MINIO_SECURE}
+      - DATABASE_URL=postgresql+psycopg://lab:labpass@postgres:5432/lab_analysis
+      - CELERY_BROKER_URL=redis://redis:6379/1
+      - CELERY_RESULT_BACKEND=redis://redis:6379/2
+      - RUN_BASE_DIR=/app/data/tasks
+      - PIPELINE_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.1.2
+      - IMAGE_PROCESSOR_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.2
+
+  # Frontend Nginx Service
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+    environment:
+      - TZ=Asia/Shanghai
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+volumes:
+  pgdata:
+  miniodata:

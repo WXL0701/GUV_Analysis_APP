@@ -1,0 +1,78 @@
+[2026-01-12 15:54:57,126: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-12 15:54:57,141: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-12 15:54:58,182: INFO/MainProcess] mingle: all alone
+[2026-01-12 15:54:58,215: INFO/MainProcess] celery@LAPTOP-J8JIKLAA ready.
+[2026-01-12 15:55:03,743: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[27c81312-6d80-4617-9ff8-8f02dec655bb] received
+[2026-01-12 15:59:12,066: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[27c81312-6d80-4617-9ff8-8f02dec655bb] succeeded in 248.32800000000861s: {'status': 'canceled'}
+[2026-01-12 15:59:46,074: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[788ef92a-9626-45b6-97e8-041f61f5d5cd] received
+[2026-01-12 16:32:27,488: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[788ef92a-9626-45b6-97e8-041f61f5d5cd] succeeded in 1961.4060000000172s: {'status': 'SUCCEEDED'}
+[2026-01-12 16:35:29,704: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[a82faed5-b418-4981-a7ea-4a727df7bb2c] received
+[2026-01-12 16:49:20,069: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[a82faed5-b418-4981-a7ea-4a727df7bb2c] succeeded in 830.3590000000258s: {'status': 'SUCCEEDED'}
+[2026-01-12 18:19:05,283: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-12 18:19:05,295: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-12 18:19:06,357: INFO/MainProcess] mingle: all alone
+[2026-01-12 18:19:06,433: INFO/MainProcess] celery@LAPTOP-J8JIKLAA ready.
+[2026-01-13 00:20:33,905: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[cea45ec9-8767-45ac-9b13-9d3342ee68c0] received
+[2026-01-13 00:32:41,300: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[cea45ec9-8767-45ac-9b13-9d3342ee68c0] succeeded in 727.3589999999967s: {'status': 'SUCCEEDED'}
+[2026-01-13 00:34:45,143: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[7347c7c1-7738-4fb4-8836-2df2473504c0] received
+[2026-01-13 00:36:27,921: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[7347c7c1-7738-4fb4-8836-2df2473504c0] succeeded in 102.78099999998813s: {'status': 'canceled'}
+[2026-01-13 01:06:04,809: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[5a2c854b-5b7f-4fd1-9b38-e274f2e96080] received
+[2026-01-13 01:06:50,882: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-13 01:06:50,894: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-13 01:06:51,956: INFO/MainProcess] mingle: all alone
+[2026-01-13 01:06:52,051: INFO/MainProcess] celery@LAPTOP-J8JIKLAA ready.
+[2026-01-13 01:06:52,055: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[f0bc2821-7bf5-4b55-b970-5a5ab2f37249] received
+[2026-01-13 01:09:20,101: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-13 01:09:20,127: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-13 01:09:21,165: INFO/MainProcess] mingle: all alone
+[2026-01-13 01:09:21,269: INFO/MainProcess] celery@LAPTOP-J8JIKLAA ready.
+[2026-01-13 01:09:21,274: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[8495f683-8170-48d2-8d31-76705af52083] received
+[2026-01-13 01:09:21,678: WARNING/MainProcess] Params not found in MinIO, using default task_id=TestFlow_99ac939e run_id=10a785fb-519c-4bbe-b94e-7f3b927a184b
+[2026-01-13 01:09:37,373: ERROR/MainProcess] Pipeline execution failed task_id=TestFlow_99ac939e run_id=10a785fb-519c-4bbe-b94e-7f3b927a184b
+Traceback (most recent call last):
+  File "G:\Trae_projects\GUV_Analysis\backend\app\worker\tasks.py", line 544, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-13 01:09:37,470: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[8495f683-8170-48d2-8d31-76705af52083] succeeded in 16.203000000008615s: {'status': 'FAILED'}
+[2026-01-13 01:09:37,481: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[6de36039-5372-427c-af3c-4003f2d5a686] received
+[2026-01-13 01:09:37,655: WARNING/MainProcess] Params not found in MinIO, using default task_id=TestFlow_99ac939e run_id=ecdab701-9f76-40e2-a387-1b61bad98985
+[2026-01-13 01:09:53,431: ERROR/MainProcess] Pipeline execution failed task_id=TestFlow_99ac939e run_id=ecdab701-9f76-40e2-a387-1b61bad98985
+Traceback (most recent call last):
+  File "G:\Trae_projects\GUV_Analysis\backend\app\worker\tasks.py", line 544, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-13 01:09:53,799: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[6de36039-5372-427c-af3c-4003f2d5a686] succeeded in 16.32799999997951s: {'status': 'FAILED'}
+[2026-01-13 01:11:42,754: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[08cbc955-b8d2-417d-b9d3-56e7c384254d] received
+[2026-01-13 01:13:29,650: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[08cbc955-b8d2-417d-b9d3-56e7c384254d] succeeded in 106.89100000000326s: {'status': 'canceled'}
+[2026-01-13 01:59:17,543: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-13 01:59:17,562: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-13 01:59:18,601: INFO/MainProcess] mingle: all alone
+[2026-01-13 01:59:18,682: INFO/MainProcess] celery@LAPTOP-J8JIKLAA ready.
+[2026-01-13 02:02:33,729: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-13 02:02:33,737: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-13 02:02:34,773: INFO/MainProcess] mingle: all alone
+[2026-01-13 02:02:34,814: INFO/MainProcess] celery@LAPTOP-J8JIKLAA ready.
+[2026-01-13 13:59:42,899: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-13 13:59:42,909: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-13 13:59:44,059: INFO/MainProcess] mingle: all alone
+[2026-01-13 13:59:44,165: INFO/MainProcess] celery@LAPTOP-J8JIKLAA ready.
+[2026-01-13 13:59:44,167: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[5a2c854b-5b7f-4fd1-9b38-e274f2e96080] received
+[2026-01-13 13:59:44,527: ERROR/MainProcess] Task app.worker.tasks.run_analysis_task[5a2c854b-5b7f-4fd1-9b38-e274f2e96080] raised unexpected: NameError("name 'datetime' is not defined")
+Traceback (most recent call last):
+  File "g:\Trae_projects\GUV_Analysis\.venv\lib\site-packages\celery\app\trace.py", line 477, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "g:\Trae_projects\GUV_Analysis\.venv\lib\site-packages\celery\app\trace.py", line 760, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "G:\Trae_projects\GUV_Analysis\backend\app\worker\tasks.py", line 334, in run_analysis_task
+    task_run.started_at = datetime.utcnow()
+NameError: name 'datetime' is not defined
+[2026-01-13 13:59:44,532: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[f0bc2821-7bf5-4b55-b970-5a5ab2f37249] received
+[2026-01-13 13:59:44,550: ERROR/MainProcess] Task app.worker.tasks.run_analysis_task[f0bc2821-7bf5-4b55-b970-5a5ab2f37249] raised unexpected: NameError("name 'datetime' is not defined")
+Traceback (most recent call last):
+  File "g:\Trae_projects\GUV_Analysis\.venv\lib\site-packages\celery\app\trace.py", line 477, in trace_task
+    R = retval = fun(*args, **kwargs)
+  File "g:\Trae_projects\GUV_Analysis\.venv\lib\site-packages\celery\app\trace.py", line 760, in __protected_call__
+    return self.run(*args, **kwargs)
+  File "G:\Trae_projects\GUV_Analysis\backend\app\worker\tasks.py", line 334, in run_analysis_task
+    task_run.started_at = datetime.utcnow()
+NameError: name 'datetime' is not defined

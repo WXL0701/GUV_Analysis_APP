@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# IDE
+.idea/
+.vscode/
+.trae/
+.DS_Store
+
+# Data & Runtime
+GUV_Analysis/data/tasks/
+GUV_Analysis/backend/data/pgdata/
+GUV_Analysis/backend/data/miniodata/
+
+# Frontend
+node_modules/
+# GUV_Analysis/frontend/dist/ # Keeping dist for now as it seems tracked, uncomment if needed
+
+# MATLAB
+*.asv
+*.mat

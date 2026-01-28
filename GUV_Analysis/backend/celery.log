@@ -1,0 +1,1276 @@
+[2026-01-13 14:58:58,411: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2026-01-13 14:59:00,415: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 4.00 seconds... (2/100)
+
+[2026-01-13 14:59:04,422: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 6.00 seconds... (3/100)
+
+[2026-01-13 14:59:10,432: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 8.00 seconds... (4/100)
+
+[2026-01-13 14:59:18,442: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 10.00 seconds... (5/100)
+
+[2026-01-13 14:59:28,457: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 12.00 seconds... (6/100)
+
+[2026-01-13 14:59:40,475: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 14.00 seconds... (7/100)
+
+[2026-01-13 14:59:54,494: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 16.00 seconds... (8/100)
+
+[2026-01-13 15:00:10,515: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 18.00 seconds... (9/100)
+
+[2026-01-13 15:00:28,539: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 20.00 seconds... (10/100)
+
+[2026-01-13 15:00:48,563: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 22.00 seconds... (11/100)
+
+[2026-01-13 15:01:10,591: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 24.00 seconds... (12/100)
+
+[2026-01-13 15:01:34,620: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 26.00 seconds... (13/100)
+
+[2026-01-13 15:02:00,653: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 28.00 seconds... (14/100)
+
+[2026-01-13 15:02:28,688: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 30.00 seconds... (15/100)
+
+[2026-01-13 15:02:58,725: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:03:30,764: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:04:02,801: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:04:34,840: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:05:06,882: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:05:38,919: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:06:10,957: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:06:42,995: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:07:15,027: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:07:47,060: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:08:19,100: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:08:51,139: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:09:23,179: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:09:55,217: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:10:27,255: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:10:59,295: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:11:31,335: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:12:03,374: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:25:38,292: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2026-01-13 15:25:40,297: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 4.00 seconds... (2/100)
+
+[2026-01-13 15:25:44,303: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 6.00 seconds... (3/100)
+
+[2026-01-13 15:25:50,313: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 8.00 seconds... (4/100)
+
+[2026-01-13 15:25:58,323: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 10.00 seconds... (5/100)
+
+[2026-01-13 15:26:08,338: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 12.00 seconds... (6/100)
+
+[2026-01-13 15:26:20,354: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 14.00 seconds... (7/100)
+
+[2026-01-13 15:26:34,372: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 16.00 seconds... (8/100)
+
+[2026-01-13 15:26:50,393: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 18.00 seconds... (9/100)
+
+[2026-01-13 15:27:08,415: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 20.00 seconds... (10/100)
+
+[2026-01-13 15:27:28,441: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 22.00 seconds... (11/100)
+
+[2026-01-13 15:27:50,468: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 24.00 seconds... (12/100)
+
+[2026-01-13 15:28:14,498: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 26.00 seconds... (13/100)
+
+[2026-01-13 15:28:40,527: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 28.00 seconds... (14/100)
+
+[2026-01-13 15:29:08,561: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 30.00 seconds... (15/100)
+
+[2026-01-13 15:29:38,595: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:30:10,631: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:30:42,670: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:31:14,709: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:31:46,746: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:32:18,785: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:32:50,819: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:33:22,859: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:33:54,897: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:34:26,931: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:34:58,969: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:35:31,006: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:36:03,044: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:36:35,083: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:37:07,120: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:37:39,159: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:38:11,198: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:38:43,232: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:39:15,272: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:39:47,307: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:40:19,344: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:40:51,381: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:41:23,418: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:41:55,457: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:42:27,494: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:42:59,532: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:43:31,565: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:44:03,602: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:44:35,641: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:45:07,679: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:45:39,714: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:46:11,751: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:46:43,790: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:47:15,830: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:47:47,870: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:48:19,908: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:48:51,948: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:49:23,986: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:49:56,023: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:50:28,061: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:51:00,098: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:51:32,137: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:52:04,174: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:52:36,211: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:53:08,250: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:53:40,286: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:54:12,324: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:54:44,361: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:55:16,400: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:55:48,438: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:56:20,474: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:56:52,511: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:57:24,549: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:57:56,585: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:58:28,623: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:59:00,661: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 15:59:32,699: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:00:04,741: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:00:36,780: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:01:08,820: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:01:40,861: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:02:12,897: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:02:44,933: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:03:16,968: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:03:49,000: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:04:21,032: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:04:53,067: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:05:25,102: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:05:57,137: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:06:29,171: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:07:01,204: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:07:33,240: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:08:05,275: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:08:37,310: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:09:09,343: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:09:41,373: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:10:13,407: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:10:45,442: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:11:17,479: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:11:49,518: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:12:21,558: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:12:53,594: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:13:25,632: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:13:57,663: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:14:29,698: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 16:15:01,734: CRITICAL/MainProcess] Unrecoverable error: OperationalError('Error 111 connecting to localhost:6379. Connection refused.')
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/transport/virtual/base.py", line 951, in create_channel
+    return self._avail_channels.pop()
+IndexError: pop from empty list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 264, in connect
+    sock = self.retry.call_with_retry(
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 265, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 627, in _connect
+    raise err
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 615, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 474, in _reraise_as_library_errors
+    yield
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 461, in _ensure_connection
+    return retry_over_time(
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/utils/functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 941, in _connection_factory
+    self._connection = self._establish_connection()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 863, in _establish_connection
+    conn = self.transport.establish_connection()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/transport/virtual/base.py", line 975, in establish_connection
+    self._avail_channels.append(self.create_channel(self))
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/transport/virtual/base.py", line 953, in create_channel
+    channel = self.Channel(connection)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/transport/redis.py", line 757, in __init__
+    self.client.ping()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/commands/core.py", line 1216, in ping
+    return self.execute_command("PING", **kwargs)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/client.py", line 533, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 1086, in get_connection
+    connection.connect()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 270, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/worker.py", line 202, in start
+    self.blueprint.start(self)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/bootsteps.py", line 365, in start
+    return self.obj.start()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/connection.py", line 21, in start
+    c.connection = c.connect()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 469, in connect
+    conn = self.connection_for_read(heartbeat=self.amqheartbeat)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 475, in connection_for_read
+    return self.ensure_connected(
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 526, in ensure_connected
+    conn = conn.ensure_connection(
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 408, in ensure_connection
+    self._ensure_connection(*args, **kwargs)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 460, in _ensure_connection
+    with ctx():
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 478, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: Error 111 connecting to localhost:6379. Connection refused.
+[2026-01-13 21:00:00,825: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2026-01-13 21:00:02,829: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 4.00 seconds... (2/100)
+
+[2026-01-13 21:00:06,835: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 6.00 seconds... (3/100)
+
+[2026-01-13 21:00:12,844: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 8.00 seconds... (4/100)
+
+[2026-01-13 21:00:20,856: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 10.00 seconds... (5/100)
+
+[2026-01-13 21:00:30,870: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 12.00 seconds... (6/100)
+
+[2026-01-13 21:00:42,886: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 14.00 seconds... (7/100)
+
+[2026-01-13 21:00:56,903: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 16.00 seconds... (8/100)
+
+[2026-01-13 21:01:12,925: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 18.00 seconds... (9/100)
+
+[2026-01-13 21:01:30,948: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 20.00 seconds... (10/100)
+
+[2026-01-13 21:01:50,972: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 22.00 seconds... (11/100)
+
+[2026-01-13 21:02:13,000: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 24.00 seconds... (12/100)
+
+[2026-01-13 21:02:37,030: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 26.00 seconds... (13/100)
+
+[2026-01-13 21:03:03,061: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 28.00 seconds... (14/100)
+
+[2026-01-13 21:03:31,095: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 30.00 seconds... (15/100)
+
+[2026-01-13 21:04:01,129: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:04:33,168: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:05:05,211: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:05:37,253: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:06:09,291: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:06:41,330: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:07:13,367: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:07:45,404: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:08:17,440: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:08:49,478: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:09:21,517: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:09:53,552: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:10:25,591: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:10:57,630: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:11:29,671: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:12:01,711: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:12:33,751: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:13:05,792: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:13:37,831: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:14:09,867: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:14:41,906: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:15:13,945: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:15:45,982: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:16:18,021: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:16:50,062: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:17:22,099: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:17:54,137: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:18:26,170: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:18:58,205: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:19:30,244: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:20:02,285: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:20:34,326: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:21:06,361: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:21:38,399: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:22:10,439: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:22:42,480: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:23:14,520: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:23:46,558: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:24:18,597: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:24:50,638: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:25:22,676: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:25:54,715: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:26:26,754: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:26:58,793: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:27:30,832: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:28:02,869: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:28:34,910: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:29:06,949: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:29:38,987: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:30:11,024: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:30:43,058: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:31:15,098: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:31:47,137: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:32:19,170: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:32:51,203: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:33:23,236: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:33:55,265: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:34:27,284: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:34:59,307: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:35:31,329: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:36:03,347: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:36:35,371: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:37:07,393: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:37:39,415: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:38:11,438: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:38:43,457: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:39:15,478: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:39:47,499: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:40:19,520: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:40:51,543: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:41:23,563: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:41:55,586: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:42:27,608: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:42:59,629: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:43:31,653: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:44:03,675: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:44:35,696: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:45:07,717: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:45:39,740: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:46:11,765: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:46:43,785: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:47:15,806: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:47:47,828: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:48:19,852: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:48:51,875: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:49:23,898: CRITICAL/MainProcess] Unrecoverable error: OperationalError('Error 111 connecting to localhost:6379. Connection refused.')
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/transport/virtual/base.py", line 951, in create_channel
+    return self._avail_channels.pop()
+IndexError: pop from empty list
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 264, in connect
+    sock = self.retry.call_with_retry(
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/retry.py", line 46, in call_with_retry
+    return do()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 265, in <lambda>
+    lambda: self._connect(), lambda error: self.disconnect(error)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 627, in _connect
+    raise err
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 615, in _connect
+    sock.connect(socket_address)
+ConnectionRefusedError: [Errno 111] Connection refused
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 474, in _reraise_as_library_errors
+    yield
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 461, in _ensure_connection
+    return retry_over_time(
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/utils/functional.py", line 318, in retry_over_time
+    return fun(*args, **kwargs)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 941, in _connection_factory
+    self._connection = self._establish_connection()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 863, in _establish_connection
+    conn = self.transport.establish_connection()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/transport/virtual/base.py", line 975, in establish_connection
+    self._avail_channels.append(self.create_channel(self))
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/transport/virtual/base.py", line 953, in create_channel
+    channel = self.Channel(connection)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/transport/redis.py", line 757, in __init__
+    self.client.ping()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/commands/core.py", line 1216, in ping
+    return self.execute_command("PING", **kwargs)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/client.py", line 533, in execute_command
+    conn = self.connection or pool.get_connection(command_name, **options)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 1086, in get_connection
+    connection.connect()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/redis/connection.py", line 270, in connect
+    raise ConnectionError(self._error_message(e))
+redis.exceptions.ConnectionError: Error 111 connecting to localhost:6379. Connection refused.
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/worker.py", line 202, in start
+    self.blueprint.start(self)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/bootsteps.py", line 365, in start
+    return self.obj.start()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 340, in start
+    blueprint.start(self)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/bootsteps.py", line 116, in start
+    step.start(parent)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/connection.py", line 21, in start
+    c.connection = c.connect()
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 469, in connect
+    conn = self.connection_for_read(heartbeat=self.amqheartbeat)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 475, in connection_for_read
+    return self.ensure_connected(
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/worker/consumer/consumer.py", line 526, in ensure_connected
+    conn = conn.ensure_connection(
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 408, in ensure_connection
+    self._ensure_connection(*args, **kwargs)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 460, in _ensure_connection
+    with ctx():
+  File "/usr/lib/python3.10/contextlib.py", line 153, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/kombu/connection.py", line 478, in _reraise_as_library_errors
+    raise ConnectionError(str(exc)) from exc
+kombu.exceptions.OperationalError: Error 111 connecting to localhost:6379. Connection refused.
+[2026-01-13 21:52:02,325: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2026-01-13 21:52:04,329: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 4.00 seconds... (2/100)
+
+[2026-01-13 21:52:08,334: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 6.00 seconds... (3/100)
+
+[2026-01-13 21:52:14,342: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 8.00 seconds... (4/100)
+
+[2026-01-13 21:52:22,351: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 10.00 seconds... (5/100)
+
+[2026-01-13 21:52:32,362: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 12.00 seconds... (6/100)
+
+[2026-01-13 21:52:44,378: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 14.00 seconds... (7/100)
+
+[2026-01-13 21:52:58,395: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 16.00 seconds... (8/100)
+
+[2026-01-13 21:53:14,414: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 18.00 seconds... (9/100)
+
+[2026-01-13 21:53:32,435: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 20.00 seconds... (10/100)
+
+[2026-01-13 21:53:52,460: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 22.00 seconds... (11/100)
+
+[2026-01-13 21:54:14,486: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 24.00 seconds... (12/100)
+
+[2026-01-13 21:54:38,512: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 26.00 seconds... (13/100)
+
+[2026-01-13 21:55:04,542: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 28.00 seconds... (14/100)
+
+[2026-01-13 21:55:32,574: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 30.00 seconds... (15/100)
+
+[2026-01-13 21:56:02,607: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:56:34,644: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:57:06,680: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:57:38,719: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:58:10,757: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:58:42,795: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:59:14,831: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 21:59:46,868: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:00:18,902: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:00:50,939: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:01:22,976: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:01:55,014: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:02:27,051: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:02:59,089: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:03:31,126: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:04:03,162: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:04:35,199: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:05:07,236: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:05:39,274: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:06:11,309: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:06:43,345: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:07:15,380: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:07:47,417: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:08:19,453: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:08:51,489: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:09:23,525: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:09:55,560: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:10:27,596: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:10:59,633: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:11:31,666: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:12:03,702: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:12:35,740: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:13:07,778: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:13:39,817: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:14:11,853: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:14:43,888: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:15:15,923: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:15:47,958: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:16:19,995: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:16:52,032: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:17:24,071: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:17:56,108: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:18:28,145: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:19:00,181: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:19:32,215: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:20:16,267: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 2.00 seconds... (1/100)
+
+[2026-01-13 22:20:18,271: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 4.00 seconds... (2/100)
+
+[2026-01-13 22:20:22,278: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 6.00 seconds... (3/100)
+
+[2026-01-13 22:20:28,289: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 8.00 seconds... (4/100)
+
+[2026-01-13 22:20:36,299: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 10.00 seconds... (5/100)
+
+[2026-01-13 22:20:46,313: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 12.00 seconds... (6/100)
+
+[2026-01-13 22:20:58,329: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 14.00 seconds... (7/100)
+
+[2026-01-13 22:21:12,345: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 16.00 seconds... (8/100)
+
+[2026-01-13 22:21:28,366: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 18.00 seconds... (9/100)
+
+[2026-01-13 22:21:46,387: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 20.00 seconds... (10/100)
+
+[2026-01-13 22:22:06,412: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 22.00 seconds... (11/100)
+
+[2026-01-13 22:22:28,440: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 24.00 seconds... (12/100)
+
+[2026-01-13 22:22:52,469: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 26.00 seconds... (13/100)
+
+[2026-01-13 22:23:18,500: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 28.00 seconds... (14/100)
+
+[2026-01-13 22:23:46,533: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 30.00 seconds... (15/100)
+
+[2026-01-13 22:24:16,566: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:24:48,605: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:25:20,643: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:25:52,682: ERROR/MainProcess] consumer: Cannot connect to redis://localhost:6379/1: Error 111 connecting to localhost:6379. Connection refused..
+Trying again in 32.00 seconds... (16/100)
+
+[2026-01-13 22:26:24,777: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-13 22:26:24,781: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-13 22:26:25,795: INFO/MainProcess] mingle: all alone
+[2026-01-13 22:26:25,807: INFO/MainProcess] celery@guv ready.
+[2026-01-13 23:07:58,393: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[27d77f3c-4815-4eb3-bbed-2cebada26789] received
+[2026-01-13 23:07:59,251: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task014 run_id=c1e2d9e8-9792-418b-bbef-361d9852d170
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 554, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-13 23:07:59,259: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[27d77f3c-4815-4eb3-bbed-2cebada26789] succeeded in 0.8640057258307934s: {'status': 'FAILED'}
+[2026-01-14 17:21:56,961: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[6f6cb61b-aa36-4bfc-ab50-3e78a86ca2cd] received
+[2026-01-14 17:26:24,718: WARNING/ForkPoolWorker-30] Params not found in MinIO, using default task_id=WXL_task15 run_id=55e01264-047c-449f-b6e3-9e055108361e
+[2026-01-14 17:26:24,730: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=55e01264-047c-449f-b6e3-9e055108361e
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 554, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-14 17:26:24,738: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[6f6cb61b-aa36-4bfc-ab50-3e78a86ca2cd] succeeded in 267.7749344781041s: {'status': 'FAILED'}
+[2026-01-14 18:12:54,997: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[81b0c408-d818-4645-b7a2-9b650bc74673] received
+[2026-01-14 18:12:55,037: WARNING/ForkPoolWorker-30] Params not found in MinIO, using default task_id=WXL_task15 run_id=316c7c99-1bfd-48c6-9344-a1f2630ac48c
+[2026-01-14 18:12:55,496: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=316c7c99-1bfd-48c6-9344-a1f2630ac48c
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 554, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 2
+[2026-01-14 18:12:55,503: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[81b0c408-d818-4645-b7a2-9b650bc74673] succeeded in 0.5049910470843315s: {'status': 'FAILED'}
+[2026-01-14 18:51:27,020: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[54992b0b-2ffb-4aea-b560-20a116b7bd43] received
+[2026-01-14 18:51:27,050: WARNING/ForkPoolWorker-30] Params not found in MinIO, using default task_id=WXL_task15 run_id=63682966-221a-46bc-acd8-f0f8450698fe
+[2026-01-14 18:51:33,712: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=63682966-221a-46bc-acd8-f0f8450698fe
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 554, in run_analysis_task
+    task.status = "SUCCEEDED"
+Exception: Process exited with code 1
+[2026-01-14 18:51:33,722: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[54992b0b-2ffb-4aea-b560-20a116b7bd43] succeeded in 6.7002309411764145s: {'status': 'FAILED'}
+[2026-01-14 19:16:08,416: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[8845c4ed-7675-4890-9be9-269097c231a3] received
+[2026-01-14 19:16:08,446: WARNING/ForkPoolWorker-30] Params not found in MinIO, using default task_id=WXL_task15 run_id=eb005305-d38d-4166-ba6a-6892a37f0525
+[2026-01-14 19:26:13,197: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=eb005305-d38d-4166-ba6a-6892a37f0525
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 554, in run_analysis_task
+    task.status = "SUCCEEDED"
+Exception: Process exited with code 1
+[2026-01-14 19:26:13,203: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[8845c4ed-7675-4890-9be9-269097c231a3] succeeded in 604.7862009592354s: {'status': 'FAILED'}
+[2026-01-14 19:57:58,589: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[315d0edc-24f2-43b8-bbe7-c9f45939c158] received
+[2026-01-14 19:57:58,634: WARNING/ForkPoolWorker-30] Params not found in MinIO, using default task_id=WXL_task15 run_id=20e4731f-6354-497f-a582-97582fac0c66
+[2026-01-14 20:07:50,277: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=20e4731f-6354-497f-a582-97582fac0c66
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 554, in run_analysis_task
+    task.status = "SUCCEEDED"
+Exception: Process exited with code 1
+[2026-01-14 20:07:50,288: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[315d0edc-24f2-43b8-bbe7-c9f45939c158] succeeded in 591.6960847564042s: {'status': 'FAILED'}
+[2026-01-14 20:56:14,179: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[a25f19f1-f8b2-4478-8f85-a4168ee7caf3] received
+[2026-01-14 20:56:14,215: WARNING/ForkPoolWorker-30] Params not found in MinIO, using default task_id=WXL_task15 run_id=3ed0da9f-ed74-4a94-b8b9-1eb93ab00adb
+[2026-01-14 21:06:04,493: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=3ed0da9f-ed74-4a94-b8b9-1eb93ab00adb
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 554, in run_analysis_task
+    task.status = "SUCCEEDED"
+Exception: Process exited with code 1
+[2026-01-14 21:06:04,501: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[a25f19f1-f8b2-4478-8f85-a4168ee7caf3] succeeded in 590.3203731067479s: {'status': 'FAILED'}
+[2026-01-14 21:42:53,017: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[9aa527f5-e318-4071-9976-d9c81715d48d] received
+[2026-01-14 21:42:53,051: WARNING/ForkPoolWorker-30] Params not found in MinIO, using default task_id=WXL_task15 run_id=bdc46eca-dc47-4924-8573-2f35756fece0
+[2026-01-14 22:02:46,363: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[9aa527f5-e318-4071-9976-d9c81715d48d] succeeded in 1193.3427499085665s: {'status': 'SUCCEEDED'}
+[2026-01-14 23:40:14,958: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[0457eed7-e15d-428a-aec5-6d057ac6f886] received
+[2026-01-14 23:40:15,000: WARNING/ForkPoolWorker-30] Params not found in MinIO, using default task_id=WXL_task15 run_id=3ffa0b67-1dc3-42f0-bdbe-0d8b3bfbc755
+[2026-01-14 23:50:09,859: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=3ffa0b67-1dc3-42f0-bdbe-0d8b3bfbc755
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 554, in run_analysis_task
+    return {"status": "failed", "error": msg}
+Exception: Process exited with code 1
+[2026-01-14 23:50:09,870: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[0457eed7-e15d-428a-aec5-6d057ac6f886] succeeded in 594.9102744832635s: {'status': 'FAILED'}
+[2026-01-15 00:06:21,674: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 00:06:21,677: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 00:06:22,684: INFO/MainProcess] mingle: all alone
+[2026-01-15 00:06:22,692: INFO/MainProcess] celery@guv ready.
+[2026-01-15 00:06:51,789: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[fe3b7332-a432-4249-942e-726e3726cbb5] received
+[2026-01-15 00:17:47,828: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[fe3b7332-a432-4249-942e-726e3726cbb5] succeeded in 656.0374843627214s: {'status': 'SUCCEEDED'}
+[2026-01-15 00:19:05,246: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[fc79cfac-5723-4ff9-a44e-75148efedb2e] received
+[2026-01-15 00:27:17,540: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=b510bf38-bad5-4506-97ff-fb94ce53708b
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 639, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-15 00:27:17,549: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[fc79cfac-5723-4ff9-a44e-75148efedb2e] succeeded in 492.300567984581s: {'status': 'FAILED'}
+[2026-01-15 00:32:06,323: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[d7bbfd6e-9b88-4798-9610-4a7b4b9a18ed] received
+[2026-01-15 00:43:15,566: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=6c55c5bd-3cc5-4b5e-bfb4-9775e1752d29
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 639, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-15 00:43:15,575: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[d7bbfd6e-9b88-4798-9610-4a7b4b9a18ed] succeeded in 669.250393409282s: {'status': 'FAILED'}
+[2026-01-15 00:44:25,751: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[a528c73e-8ad5-401d-b31f-5e77c88162be] received
+[2026-01-15 00:53:01,666: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=ab0bb2c9-d084-4371-bf8f-35a0b74bfbec
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 639, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-15 00:53:01,674: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[a528c73e-8ad5-401d-b31f-5e77c88162be] succeeded in 515.9212007671595s: {'status': 'FAILED'}
+[2026-01-15 00:58:41,222: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[29affb3a-f904-4568-9468-a13f19cd068b] received
+[2026-01-15 01:16:05,248: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[29affb3a-f904-4568-9468-a13f19cd068b] succeeded in 1044.0248013064265s: {'status': 'SUCCEEDED'}
+[2026-01-15 01:16:33,045: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[fa56ea09-f855-4be8-826a-4a0058e6c936] received
+[2026-01-15 01:24:35,593: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=047f57cc-351e-46b0-a139-520b8904b551
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 639, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-15 01:24:35,600: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[fa56ea09-f855-4be8-826a-4a0058e6c936] succeeded in 482.55485674738884s: {'status': 'FAILED'}
+[2026-01-15 02:01:08,247: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[682adba5-ea76-48bb-9b2e-7f02bb3d4725] received
+[2026-01-15 02:09:11,552: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=736489cc-0ecb-421a-b3fe-830ff2c4839c
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 639, in run_analysis_task
+    task.progress = p
+Exception: Process exited with code 1
+[2026-01-15 02:09:11,561: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[682adba5-ea76-48bb-9b2e-7f02bb3d4725] succeeded in 483.31363785639405s: {'status': 'FAILED'}
+[2026-01-15 02:18:40,333: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[496252d2-937f-43d2-923a-533d855ba8fe] received
+[2026-01-15 02:27:06,915: ERROR/ForkPoolWorker-30] Pipeline execution failed task_id=WXL_task15 run_id=1c3f31f0-2609-44ee-bc8d-9815e42ed809
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 639, in run_analysis_task
+    task.progress = p
+Exception: Process exited with code 1
+[2026-01-15 02:27:06,921: INFO/ForkPoolWorker-30] Task app.worker.tasks.run_analysis_task[496252d2-937f-43d2-923a-533d855ba8fe] succeeded in 506.5865812972188s: {'status': 'FAILED'}
+[2026-01-15 02:28:28,598: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 02:28:28,602: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 02:28:29,610: INFO/MainProcess] mingle: all alone
+[2026-01-15 02:28:29,622: INFO/MainProcess] celery@guv ready.
+[2026-01-15 02:31:08,665: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[971cddca-6090-45eb-a6b5-57ad3b848947] received
+[2026-01-15 02:39:24,371: ERROR/ForkPoolWorker-28] Pipeline execution failed task_id=WXL_task15 run_id=e3cd3bf3-64b2-4978-9b16-08580699dd92
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 661, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-15 02:39:24,380: INFO/ForkPoolWorker-28] Task app.worker.tasks.run_analysis_task[971cddca-6090-45eb-a6b5-57ad3b848947] succeeded in 495.7140773832798s: {'status': 'FAILED'}
+[2026-01-15 09:40:49,651: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 09:40:49,654: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 09:40:50,662: INFO/MainProcess] mingle: all alone
+[2026-01-15 09:40:50,674: INFO/MainProcess] celery@guv ready.
+[2026-01-15 09:49:06,779: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[d93c196d-466a-4920-ab12-ed378c9cb822] received
+[2026-01-15 10:06:46,880: INFO/ForkPoolWorker-28] Task app.worker.tasks.run_analysis_task[d93c196d-466a-4920-ab12-ed378c9cb822] succeeded in 1060.098774407059s: {'status': 'SUCCEEDED'}
+[2026-01-15 10:14:11,747: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 10:14:11,751: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 10:14:12,762: INFO/MainProcess] mingle: all alone
+[2026-01-15 10:14:12,771: INFO/MainProcess] celery@guv ready.
+[2026-01-15 10:46:39,733: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 10:46:39,736: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 10:46:40,756: WARNING/MainProcess] /home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/venv/lib/python3.10/site-packages/celery/app/control.py:56: DuplicateNodenameWarning: Received multiple replies from node name: celery@guv.
+Please make sure you give each node a unique nodename using
+the celery worker `-n` option.
+  warnings.warn(DuplicateNodenameWarning(
+
+[2026-01-15 10:46:40,756: INFO/MainProcess] mingle: all alone
+[2026-01-15 10:46:40,772: INFO/MainProcess] celery@guv ready.
+[2026-01-15 10:47:49,355: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[bb6cb36c-a802-4585-9d54-a80f6c8dbb8a] received
+[2026-01-15 11:05:40,806: INFO/ForkPoolWorker-28] Task app.worker.tasks.run_analysis_task[bb6cb36c-a802-4585-9d54-a80f6c8dbb8a] succeeded in 1071.4501317851245s: {'status': 'SUCCEEDED'}
+[2026-01-15 11:06:05,078: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[f5551904-08f4-4b33-a464-5867b21a8b4a] received
+[2026-01-15 11:14:48,219: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 11:14:48,221: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 11:14:49,230: INFO/MainProcess] mingle: all alone
+[2026-01-15 11:14:49,249: INFO/MainProcess] celery@guv ready.
+[2026-01-15 11:19:49,086: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 11:19:49,088: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 11:19:50,099: INFO/MainProcess] mingle: all alone
+[2026-01-15 11:19:50,112: INFO/MainProcess] celery@guv ready.
+[2026-01-15 13:24:46,985: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 13:24:46,987: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 13:24:47,996: INFO/MainProcess] mingle: all alone
+[2026-01-15 13:24:48,009: INFO/MainProcess] celery@guv ready.
+[2026-01-15 13:34:09,048: INFO/MainProcess] Task app.worker.tasks.run_analysis_task[a1d3a9ed-7364-410c-9ec5-091069a861ee] received
+[2026-01-15 13:47:06,175: ERROR/ForkPoolWorker-28] Pipeline execution failed task_id=WXL_task15 run_id=0866c45c-3aff-4b13-9c77-bce1ec4781a7
+Traceback (most recent call last):
+  File "/home/guv_Analysis/GUV_Analysis_APP/GUV_Analysis/backend/app/worker/tasks.py", line 661, in run_analysis_task
+    raise Exception(f"Process exited with code {process.returncode}")
+Exception: Process exited with code 1
+[2026-01-15 13:47:06,182: INFO/ForkPoolWorker-28] Task app.worker.tasks.run_analysis_task[a1d3a9ed-7364-410c-9ec5-091069a861ee] succeeded in 777.1311999261379s: {'status': 'FAILED'}
+[2026-01-15 16:00:29,727: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 16:00:29,730: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 16:00:30,740: INFO/MainProcess] mingle: all alone
+[2026-01-15 16:00:30,752: INFO/MainProcess] celery@guv ready.
+[2026-01-15 16:03:27,402: INFO/MainProcess] Connected to redis://localhost:6379/1
+[2026-01-15 16:03:27,405: INFO/MainProcess] mingle: searching for neighbors
+[2026-01-15 16:03:28,415: INFO/MainProcess] mingle: all alone
+[2026-01-15 16:03:28,426: INFO/MainProcess] celery@guv ready.
