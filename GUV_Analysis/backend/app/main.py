@@ -1,3 +1,5 @@
+import logging
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import settings
@@ -8,6 +10,32 @@ from app.api.routes import tasks, system, auth, users
 from app.db.base import Base
 from app.db.session import engine, SessionLocal
 from app.db.models import User
+
+def _add_file_handler(logger: logging.Logger, filename: str, formatter: logging.Formatter, level: int) -> None:
+    for handler in logger.handlers:
+        if isinstance(handler, logging.FileHandler) and getattr(handler, "baseFilename", None) == filename:
+            return
+    handler = logging.FileHandler(filename)
+    handler.setLevel(level)
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+
+
+def _setup_logging() -> None:
+    log_dir = os.path.join(settings.RUN_BASE_DIR, "system_logs")
+    os.makedirs(log_dir, exist_ok=True)
+    formatter = logging.Formatter("%(asctime)s %(levelname)s %(name)s %(message)s")
+    app_log = os.path.join(log_dir, "app.log")
+    access_log = os.path.join(log_dir, "access.log")
+    root_logger = logging.getLogger()
+    if root_logger.level == logging.WARNING:
+        root_logger.setLevel(logging.INFO)
+    _add_file_handler(root_logger, app_log, formatter, logging.INFO)
+    _add_file_handler(logging.getLogger("uvicorn.error"), app_log, formatter, logging.INFO)
+    _add_file_handler(logging.getLogger("uvicorn.access"), access_log, formatter, logging.INFO)
+
+
+_setup_logging()
 
 # Create tables on startup (for simple dev setup)
 Base.metadata.create_all(bind=engine)

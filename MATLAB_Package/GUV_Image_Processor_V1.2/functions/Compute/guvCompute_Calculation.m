@@ -96,8 +96,13 @@ function AllResults = guvCompute_Calculation(TTracks, ND2Path, SeriesID, Cfg)
 
         frames = TTracks(id).frames;
         centroids_track = TTracks(id).centroids;
-        majorAxisLength = TTracks(id).majorAxisLength;
         boundaries_all = TTracks(id).boundaries;
+        num_files = length(frames);
+        if isfield(TTracks(id), 'majorAxisLength')
+            majorAxisLength = TTracks(id).majorAxisLength;
+        else
+            majorAxisLength = nan(num_files, 1);
+        end
 
         % 提取可选强度字段（如存在则原样搬运到 AllResults）
         fieldList = {'meanIntensities_bg_C01', 'meanIntensities_bg_C02', ...
@@ -112,7 +117,6 @@ function AllResults = guvCompute_Calculation(TTracks, ND2Path, SeriesID, Cfg)
             end
         end
 
-        num_files = length(frames);
         % if Cfg.Verbose
         %     fprintf('[Compute] ID=%d, 帧数=%d ... ', id, num_files);
         % end

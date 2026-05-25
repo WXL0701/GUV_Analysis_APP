@@ -1,5 +1,6 @@
 import uuid
 import logging
+import os
 from typing import Optional, Dict, Any
 from sqlalchemy.orm import Session
 from sqlalchemy import func
@@ -7,6 +8,7 @@ from sqlalchemy import func
 from app.db.models import Task, TaskRun
 from app.worker.tasks import run_analysis_task
 from app.services.autoexp_callback_service import maybe_send_autoexp_callback
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -16,6 +18,25 @@ class QueueService:
     Ensures FIFO execution order by leveraging the underlying Celery worker configuration (concurrency=1).
     Provides methods for task submission, status tracking, and queue monitoring.
     """
+
+    @staticmethod
+    def _cleanup_cancel_markers(task_id: str) -> None:
+        images_dir = os.path.join(settings.RUN_BASE_DIR, str(task_id), "images")
+        try:
+            if not os.path.isdir(images_dir):
+                return
+            for name in os.listdir(images_dir):
+                if name == "cancel.global" or name.startswith("cancel."):
+                    marker_path = os.path.join(images_dir, name)
+                    try:
+                        os.remove(marker_path)
+                        logger.info("Removed stale cancel marker: %s", marker_path)
+                    except FileNotFoundError:
+                        continue
+                    except Exception as exc:
+                        logger.warning("Failed to remove cancel marker %s: %s", marker_path, exc)
+        except Exception as exc:
+            logger.warning("Failed to scan cancel markers for task %s: %s", task_id, exc)
 
     @staticmethod
     def submit_task(
@@ -55,6 +76,7 @@ class QueueService:
         task.status = "QUEUED"
         task.cancel_requested = False
         task.last_error = None # Clear previous error
+        QueueService._cleanup_cancel_markers(str(task.id))
         
         db.commit()
         

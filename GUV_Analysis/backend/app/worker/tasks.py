@@ -15,21 +15,83 @@ import queue
 from app.worker.celery_app import celery_app
 from app.core.config import settings
 from app.services.minio_service import MinioService
-from app.services.autoexp_callback_service import maybe_send_autoexp_callback
+from app.services.autoexp_callback_service import send_autoexp_callback_detail
 from app.db.session import SessionLocal
-from app.db.models import Task, TaskRun, AppConfig
+from app.db.models import Task, TaskRun, AppConfig, User
 
 logger = logging.getLogger(__name__)
 
-def _append_runtime_log(log_file: str, message: str):
+def _append_runtime_log(log_file: str, message: str, level: str = "INFO", module: str = __name__):
     ts = time.strftime("%Y-%m-%d %H:%M:%S")
+    effective_level = (level or "INFO").upper()
+    if effective_level == "INFO":
+        prefix = (message or "").split(":", 1)[0].strip().upper()
+        if prefix in ("WARN", "WARNING"):
+            effective_level = "WARN"
+        elif prefix in ("ERROR", "FAILED"):
+            effective_level = "ERROR"
     try:
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         with open(log_file, "a", encoding="utf-8") as f:
-            f.write(f"[{ts}] {message}\n")
+            f.write(f"[{ts}] {effective_level} {module} {message}\n")
             f.flush()
     except Exception:
         pass
+
+def _get_task_type_label(db, task: Task) -> tuple[str, bool]:
+    if task.user_id:
+        user = db.query(User).filter(User.id == task.user_id).first()
+        if user and user.role == "external":
+            return "三方自动化任务", True
+    return "手动任务", False
+
+def _append_callback_detail(log_file: str, detail: dict[str, Any]) -> None:
+    if detail.get("skipped"):
+        msg = f"CALLBACK skipped=1 reason={detail.get('skip_reason')} url={detail.get('url') or '-'}"
+        _append_runtime_log(log_file, msg, level="INFO")
+        return
+    else:
+        ok = bool(detail.get("ok"))
+        status = detail.get("status")
+        attempts = detail.get("attempts")
+        url = detail.get("url") or "-"
+        duration_ms = detail.get("duration_ms")
+        err = detail.get("error")
+        msg = f"CALLBACK ok={ok} http={status} attempts={attempts} duration_ms={duration_ms} url={url}"
+        if err:
+            msg = f"{msg} error={err}"
+        _append_runtime_log(log_file, msg, level=("INFO" if ok else "WARN"))
+        req = detail.get("request_body")
+        if req:
+            _append_runtime_log(log_file, f"CALLBACK_REQUEST body={req}", level=("INFO" if ok else "WARN"))
+        resp_body = detail.get("response_body")
+        if resp_body:
+            _append_runtime_log(log_file, f"CALLBACK_RESPONSE body={resp_body}", level=("INFO" if ok else "WARN"))
+
+def _send_callback_and_log(
+    *,
+    db,
+    task: Task,
+    task_run: Optional[TaskRun],
+    mode: Optional[str],
+    run_dir: Optional[str],
+    error_code: Optional[str],
+    error_message: Optional[str],
+    log_file: str,
+    is_external: bool,
+) -> bool:
+    detail = send_autoexp_callback_detail(
+        db=db,
+        task=task,
+        task_run=task_run,
+        mode=mode,
+        run_dir=run_dir,
+        error_code=error_code,
+        error_message=error_message,
+    )
+    if is_external:
+        _append_callback_detail(log_file, detail)
+    return bool(detail.get("ok"))
 
 # Helper to get MinIO service (can't rely on Depends in Celery)
 def get_minio_service():
@@ -270,9 +332,11 @@ def _download_nd2_with_progress(
     part_path = f"{cached_nd2_path}.part"
 
     stat = None
+    stat_error_msg = None
     try:
         stat = minio.client.stat_object(minio.bucket, key)
     except Exception as e:
+        stat_error_msg = str(e)
         _append_runtime_log(log_file, f"WARN: Failed to stat ND2 before transfer: {type(e).__name__}: {str(e)}")
 
     remote_size = int(getattr(stat, "size", 0) or 0) if stat else 0
@@ -290,6 +354,21 @@ def _download_nd2_with_progress(
     meta = _read_json(meta_path) or {}
     meta_etag = meta.get("etag")
     meta_total = meta.get("bytes_total")
+
+    marker_path = os.path.join(images_dir, "nd2.remote_deleted.json")
+    if os.path.exists(marker_path) and local_exists and local_size > 0:
+        base = {"task_id": task_id, "run_id": run_id, "state": "ready", "started_at": time.time()}
+        total = meta_total or local_size
+        _update_transfer_status(status_path, base, bytes_total=total, bytes_done=total, state="ready", message="Using cached ND2 (remote deleted)", etag=meta_etag)
+        return
+
+    if stat_error_msg and local_exists and local_size > 0:
+        msg = stat_error_msg.lower()
+        if any(x in msg for x in ("nosuchkey", "notfound", "404")):
+            base = {"task_id": task_id, "run_id": run_id, "state": "ready", "started_at": time.time()}
+            total = meta_total or local_size
+            _update_transfer_status(status_path, base, bytes_total=total, bytes_done=total, state="ready", message="Using cached ND2 (remote missing)", etag=meta_etag)
+            return
 
     if local_exists and remote_etag and meta_etag == remote_etag:
         base = {"task_id": task_id, "run_id": run_id, "state": "ready", "started_at": time.time()}
@@ -394,6 +473,108 @@ def _download_nd2_with_progress(
         except Exception:
             pass
 
+def _maybe_cleanup_remote_nd2_after_success(
+    *,
+    task_id: str,
+    minio: MinioService,
+    nd2_key: str,
+    cached_nd2_path: str,
+    images_dir: str,
+    log_file: str,
+) -> None:
+    try:
+        marker_path = os.path.join(images_dir, "nd2.remote_deleted.json")
+        if os.path.exists(marker_path):
+            return
+
+        nd2_key = str(nd2_key or "")
+        if not nd2_key:
+            return
+
+        safe_prefix = f"tasks/{task_id}/"
+        if not nd2_key.startswith(safe_prefix):
+            _append_runtime_log(log_file, f"WARN: Skip remote ND2 cleanup due to unexpected key={nd2_key}")
+            return
+
+        if not os.path.exists(cached_nd2_path):
+            _append_runtime_log(log_file, f"WARN: Skip remote ND2 cleanup because local file missing: {cached_nd2_path}")
+            return
+
+        try:
+            local_size = int(os.path.getsize(cached_nd2_path) or 0)
+        except Exception:
+            local_size = 0
+        if local_size <= 0:
+            _append_runtime_log(log_file, f"WARN: Skip remote ND2 cleanup because local file size invalid: {local_size}")
+            return
+
+        try:
+            with open(cached_nd2_path, "rb") as f:
+                head = f.read(64)
+            if not head:
+                _append_runtime_log(log_file, "WARN: Skip remote ND2 cleanup because local file unreadable/empty")
+                return
+        except Exception as e:
+            _append_runtime_log(log_file, f"WARN: Skip remote ND2 cleanup because local file unreadable: {type(e).__name__}: {str(e)}")
+            return
+
+        meta_path = os.path.join(images_dir, "nd2.meta.json")
+        meta = _read_json(meta_path) or {}
+        meta_remote_key = meta.get("remote_key")
+        if meta_remote_key and str(meta_remote_key) != nd2_key:
+            _append_runtime_log(log_file, f"WARN: Skip remote ND2 cleanup because meta remote_key mismatch: {meta_remote_key} != {nd2_key}")
+            return
+        meta_etag = meta.get("etag")
+        meta_total = meta.get("bytes_total")
+
+        remote_size: Optional[int] = None
+        remote_etag: Optional[str] = None
+        try:
+            st = minio.client.stat_object(minio.bucket, nd2_key)
+            remote_size = int(getattr(st, "size", 0) or 0)
+            remote_etag = getattr(st, "etag", None)
+        except Exception as e:
+            msg = str(e).lower()
+            if any(x in msg for x in ("nosuchkey", "notfound", "404")):
+                _append_runtime_log(log_file, f"Remote ND2 already missing, skip cleanup. key={nd2_key}")
+                return
+            remote_size = None
+            remote_etag = None
+            _append_runtime_log(log_file, f"WARN: Failed to stat remote ND2 before cleanup: {type(e).__name__}: {str(e)}")
+
+        if remote_size is not None and remote_size > 0 and local_size != remote_size:
+            _append_runtime_log(log_file, f"WARN: Skip remote ND2 cleanup because size mismatch local={local_size} remote={remote_size}")
+            return
+        if remote_size in (None, 0) and meta_total and int(meta_total) > 0 and local_size != int(meta_total):
+            _append_runtime_log(log_file, f"WARN: Skip remote ND2 cleanup because size mismatch local={local_size} meta_total={meta_total}")
+            return
+        if remote_etag and meta_etag and str(remote_etag) != str(meta_etag):
+            _append_runtime_log(log_file, f"WARN: Skip remote ND2 cleanup because etag mismatch meta={meta_etag} remote={remote_etag}")
+            return
+
+        try:
+            minio.client.remove_object(minio.bucket, nd2_key)
+        except Exception as e:
+            msg = str(e).lower()
+            if any(x in msg for x in ("nosuchkey", "notfound", "404")):
+                _append_runtime_log(log_file, f"Remote ND2 already missing, skip cleanup. key={nd2_key}")
+                return
+            _append_runtime_log(log_file, f"WARN: Remote ND2 cleanup failed: {type(e).__name__}: {str(e)}")
+            return
+
+        _write_json_atomic(
+            marker_path,
+            {
+                "deleted_at": time.time(),
+                "remote_key": nd2_key,
+                "bytes_local": local_size,
+                "etag": remote_etag or meta_etag,
+            },
+        )
+        _append_runtime_log(log_file, f"Remote ND2 deleted. key={nd2_key} bytes_local={local_size}")
+    except Exception as e:
+        _append_runtime_log(log_file, f"WARN: Remote ND2 cleanup skipped due to error: {type(e).__name__}: {str(e)}")
+
 @celery_app.task(bind=True)
 def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
     """
@@ -442,6 +623,8 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
 
         log_file = os.path.join(settings.RUN_BASE_DIR, str(task_id), str(run_id), "runtime.log")
         _append_runtime_log(log_file, f"Worker started. mode={mode}")
+        task_type_label, is_external = _get_task_type_label(db, task)
+        _append_runtime_log(log_file, f"TASK_INIT task_id={task_id} run_id={run_id} type={task_type_label}")
         
         # Update started_at
         if task_run:
@@ -537,7 +720,7 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                 if task_run:
                     task_run.status = "CANCELED"
                 db.commit()
-                maybe_send_autoexp_callback(
+                _send_callback_and_log(
                     db=db,
                     task=task,
                     task_run=task_run,
@@ -545,6 +728,8 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                     run_dir=run_dir,
                     error_code="GUV_RUN_CANCELED",
                     error_message=None,
+                    log_file=log_file,
+                    is_external=is_external,
                 )
                 return {"status": "canceled"}
             else:
@@ -553,7 +738,7 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                 if task_run:
                     task_run.status = "FAILED"
                 db.commit()
-                maybe_send_autoexp_callback(
+                _send_callback_and_log(
                     db=db,
                     task=task,
                     task_run=task_run,
@@ -561,6 +746,8 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                     run_dir=run_dir,
                     error_code="GUV_RUN_FAILED",
                     error_message=task.last_error,
+                    log_file=log_file,
+                    is_external=is_external,
                 )
                 return {"status": "failed", "error": str(e)}
 
@@ -622,7 +809,7 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
             if task_run:
                 task_run.status = "FAILED"
             db.commit()
-            maybe_send_autoexp_callback(
+            _send_callback_and_log(
                 db=db,
                 task=task,
                 task_run=task_run,
@@ -630,6 +817,8 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                 run_dir=run_dir,
                 error_code="GUV_RUN_FAILED",
                 error_message=msg,
+                log_file=log_file,
+                is_external=is_external,
             )
             return {"status": "failed", "error": msg}
         
@@ -726,7 +915,7 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                         task_run.status = "CANCELED"
                     _append_runtime_log(log_file, "CANCELED")
                     db.commit()
-                    maybe_send_autoexp_callback(
+                    _send_callback_and_log(
                         db=db,
                         task=task,
                         task_run=task_run,
@@ -734,6 +923,8 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                         run_dir=run_dir,
                         error_code="GUV_RUN_CANCELED",
                         error_message=None,
+                        log_file=log_file,
+                        is_external=is_external,
                     )
                     return {"status": "canceled"}
 
@@ -745,6 +936,14 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
             if task_run:
                 task_run.status = "SUCCEEDED"
             _append_runtime_log(log_file, "SUCCEEDED")
+            _maybe_cleanup_remote_nd2_after_success(
+                task_id=str(task_id),
+                minio=minio,
+                nd2_key=str(task.nd2_object_key),
+                cached_nd2_path=cached_nd2_path,
+                images_dir=images_dir,
+                log_file=log_file,
+            )
         except Exception as e:
             task.status = "FAILED"
             task.last_error = str(e)[:4000]
@@ -755,7 +954,7 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
             
         db.commit()
         if task.status == "FAILED":
-            maybe_send_autoexp_callback(
+            _send_callback_and_log(
                 db=db,
                 task=task,
                 task_run=task_run,
@@ -763,9 +962,11 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                 run_dir=run_dir,
                 error_code="GUV_RUN_FAILED",
                 error_message=task.last_error,
+                log_file=log_file,
+                is_external=is_external,
             )
         elif task.status == "SUCCEEDED":
-            maybe_send_autoexp_callback(
+            _send_callback_and_log(
                 db=db,
                 task=task,
                 task_run=task_run,
@@ -773,6 +974,8 @@ def run_analysis_task(self, task_id: str, mode: str, run_id: str = None):
                 run_dir=run_dir,
                 error_code=None,
                 error_message=None,
+                log_file=log_file,
+                is_external=is_external,
             )
         return {"status": task.status}
         

@@ -63,6 +63,7 @@ services:
       - RUN_BASE_DIR=/app/data/tasks
       - PIPELINE_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.1.2
       - IMAGE_PROCESSOR_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.2
+      - AUTOEXP_CALLBACK_URL=http://10.30.70.120:30080/auto-exp/api/v1/notifications/callback/guv
 
   # Celery Worker for background tasks
   celery_worker:
@@ -94,6 +95,7 @@ services:
       - RUN_BASE_DIR=/app/data/tasks
       - PIPELINE_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.1.2
       - IMAGE_PROCESSOR_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.2
+      - AUTOEXP_CALLBACK_URL=http://10.30.70.120:30080/auto-exp/api/v1/notifications/callback/guv
 
   # Frontend Nginx Service
   frontend:

@@ -38,7 +38,7 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8  # 8 days
     EXTERNAL_AUTORUN_TOKEN: str = os.getenv("EXTERNAL_AUTORUN_TOKEN", "")
     EXTERNAL_AUTORUN_USERNAME: str = os.getenv("EXTERNAL_AUTORUN_USERNAME", "auto-exp")
-    AUTOEXP_CALLBACK_URL: str = os.getenv("AUTOEXP_CALLBACK_URL", "http://10.30.70.120:30080/auto-exp")
+    AUTOEXP_CALLBACK_URL: str = os.getenv("AUTOEXP_CALLBACK_URL", "http://10.30.70.120:30080/auto-exp/api/v1/notifications/callback/guv")
     AUTOEXP_CALLBACK_TOKEN: str = os.getenv("AUTOEXP_CALLBACK_TOKEN", "")
     AUTOEXP_CALLBACK_TIMEOUT_SECONDS: int = int(os.getenv("AUTOEXP_CALLBACK_TIMEOUT_SECONDS", "5"))
     AUTOEXP_CALLBACK_MAX_RETRIES: int = int(os.getenv("AUTOEXP_CALLBACK_MAX_RETRIES", "0"))

@@ -25,6 +25,12 @@ for i = 1:numel(tables)
     allVars = [allVars; string(tables{i}.Properties.VariableNames(:))]; %#ok<AGROW>
 end
 allVars = unique(allVars, 'stable');
+validAllVars = ~ismissing(allVars) & (strlength(strtrim(allVars)) > 0);
+if any(~validAllVars)
+    warning('guvUtil_alignTablesForVertcat:InvalidVarName', ...
+        'Found empty/missing variable names; they will be ignored during align+vertcat.');
+end
+allVars = allVars(validAllVars);
 
 % 为每个变量寻找一个“原型列”，用于确定类型
 protoMap = containers.Map('KeyType','char','ValueType','any');
@@ -47,6 +53,16 @@ for i = 1:numel(tables)
     missVars = setdiff(allVars, curVars, 'stable');
     for mv = missVars.'
         name = char(mv);
+        if isempty(strtrim(name))
+            continue;
+        end
+        % 极端情况下可能出现未建立原型映射的变量名，做兜底避免流程中断
+        if ~isKey(protoMap, name)
+            warning('guvUtil_alignTablesForVertcat:MissingProto', ...
+                'Variable "%s" has no prototype in protoMap; fill with NaN.', name);
+            T.(name) = nan(n,1);
+            continue;
+        end
         proto = protoMap(name);
 
         if isstring(proto)
