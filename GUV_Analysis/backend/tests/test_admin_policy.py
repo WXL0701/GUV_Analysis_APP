@@ -8,8 +8,6 @@ from app.db.session import SessionLocal
 import uuid
 import sys
 
-client = TestClient(app)
-
 def run_test():
     db = SessionLocal()
     try:
@@ -18,6 +16,14 @@ def run_test():
         db.close()
 
 def test_admin_permissions_and_password_policy(db: Session):
+    def override_get_db():
+        try:
+            yield db
+        finally:
+            pass
+
+    app.dependency_overrides[deps.get_db] = override_get_db
+    client = TestClient(app)
     print("Starting Admin Policy Test...")
     # Cleanup potential leftover users from previous runs
     for uname in ["OtherUser", "SimpleUser", "SpecialUser", "ShortUser"]:
@@ -123,6 +129,7 @@ def test_admin_permissions_and_password_policy(db: Session):
     assert not found, "Regular user should not see other user's task in list"
 
     print("All tests passed!")
+    app.dependency_overrides.clear()
 
 if __name__ == "__main__":
     run_test()

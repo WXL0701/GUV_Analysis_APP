@@ -29,7 +29,7 @@ def test_queue_submission(db: Session):
         
         # Verify DB State
         assert task.status == "QUEUED"
-        assert task.run_id_current == run_id
+        assert str(task.run_id_current) == run_id
         
         run = db.query(TaskRun).filter(TaskRun.id == run_id).first()
         assert run is not None
@@ -39,6 +39,27 @@ def test_queue_submission(db: Session):
         
         # Verify Celery Call
         mock_delay.assert_called_once_with(task_id, "debug", run_id)
+
+def test_queue_submission_video_dispatches_video_task(db: Session):
+    user = User(id=uuid.uuid4(), username="video_queue_tester", password_hash="pw", role="user")
+    db.add(user)
+    db.commit()
+
+    task_id = str(uuid.uuid4())
+    task = Task(id=task_id, user_id=user.id, name="Video Queue Task", status="READY")
+    db.add(task)
+    db.commit()
+
+    with patch("app.services.queue_service.run_analysis_task.delay") as analysis_delay, \
+         patch("app.services.queue_service.run_video_task.delay") as video_delay:
+        run_id = QueueService.submit_task(db, task, "video", {"Video": {"Tasks": ["Merge"]}})
+
+        run = db.query(TaskRun).filter(TaskRun.id == run_id).first()
+        assert run is not None
+        assert run.run_mode == "video"
+        assert run.params_snapshot == {"Video": {"Tasks": ["Merge"]}}
+        analysis_delay.assert_not_called()
+        video_delay.assert_called_once_with(task_id, run_id)
 
 def test_queue_status_monitoring(db: Session):
     """

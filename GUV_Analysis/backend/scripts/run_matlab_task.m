@@ -67,7 +67,7 @@ function run_matlab_task(mode, nd2_path, params_path, out_dir, pipeline_root)
             if exist(dest, 'file')
                 continue;
             end
-            cmd = sprintf('ffmpeg -y -loglevel error -i \"%s\" -pix_fmt yuv420p \"%s\"', src, dest);
+            cmd = localFfmpegCommand(src, dest);
             [status, out] = system(cmd);
             if status == 0 && exist(dest, 'file')
                 try
@@ -105,7 +105,7 @@ function run_matlab_task(mode, nd2_path, params_path, out_dir, pipeline_root)
             src = fullfile(avis(1).folder, avis(1).name);
             % Try to force transcode AVI to MP4 for preview
             dest_mp4 = fullfile(std_debug_dir, 'preview.mp4');
-            cmd = sprintf('ffmpeg -y -loglevel error -i \"%s\" -pix_fmt yuv420p \"%s\"', src, dest_mp4);
+            cmd = localFfmpegCommand(src, dest_mp4);
             [status, ~] = system(cmd);
             
             if status == 0 && exist(dest_mp4, 'file')
@@ -131,4 +131,13 @@ function run_matlab_task(mode, nd2_path, params_path, out_dir, pipeline_root)
     end
 
     fprintf("Wrapper: Task Done.\n");
+end
+
+function cmd = localFfmpegCommand(src, dest)
+    ffmpeg_bin = getenv('FFMPEG_BIN');
+    if isempty(ffmpeg_bin)
+        ffmpeg_bin = '/usr/bin/ffmpeg';
+    end
+    cmd = sprintf('env -u LD_LIBRARY_PATH -u LD_PRELOAD \"%s\" -y -loglevel error -i \"%s\" -pix_fmt yuv420p \"%s\"', ...
+        ffmpeg_bin, src, dest);
 end

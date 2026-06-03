@@ -1,4 +1,4 @@
-FROM python:3.10-slim
+FROM docker.1ms.run/python:3.10-slim
 
 WORKDIR /app
 
@@ -6,7 +6,11 @@ WORKDIR /app
 # RUN apt-get update && apt-get install -y gcc libpq-dev && rm -rf /var/lib/apt/lists/*
 
 # 安装 MATLAB 运行所需的系统库
-RUN apt-get update && apt-get install -y \
+RUN sed -i \
+    -e 's|http://deb.debian.org/debian-security|https://mirrors.tuna.tsinghua.edu.cn/debian-security|g' \
+    -e 's|http://deb.debian.org/debian|https://mirrors.tuna.tsinghua.edu.cn/debian|g' \
+    /etc/apt/sources.list.d/debian.sources \
+    && apt-get update && apt-get install -y --no-install-recommends \
     libgdk-pixbuf-2.0-0 \
     libxt6 \
     libxext6 \
@@ -19,11 +23,12 @@ RUN apt-get update && apt-get install -y \
     libxcursor1 \
     libxrandr2 \
     ffmpeg \
+    default-jdk-headless \
     && rm -rf /var/lib/apt/lists/*
 
 # 安装依赖
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 # 复制应用代码
 COPY . .

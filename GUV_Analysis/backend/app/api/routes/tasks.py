@@ -2,15 +2,19 @@ from typing import Any, List, Optional, Dict
 import boto3
 from botocore.config import Config
 from botocore.exceptions import ClientError
-from fastapi import APIRouter, Body, Depends, HTTPException, Request, Query
+from fastapi import APIRouter, Body, Depends, HTTPException, Request, Query, BackgroundTasks
 from fastapi.responses import FileResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import func, or_, desc
 import logging
 import json
+import tempfile
+import zipfile
+import subprocess
 from datetime import datetime, timedelta
 import hashlib
 import time
+import threading
 
 from app.api import deps
 from app.core.config import settings
@@ -27,6 +31,10 @@ router = APIRouter()
 logger = logging.getLogger(__name__)
 
 _redis_client: Optional[redis.Redis] = None
+_java_nd2_compile_lock = threading.Lock()
+_nd2_preview_prefetch_semaphore = threading.Semaphore(1)
+_ND2_PREVIEW_LUTS = {"gray", "green", "red", "magenta", "cyan"}
+_ND2_PREVIEW_QUALITIES = {"fast", "full"}
 
 def _get_redis() -> redis.Redis:
     global _redis_client
@@ -125,11 +133,27 @@ def _resolve_run_dir(
     if not effective_run_id:
         raise HTTPException(status_code=404, detail="Run not found")
 
-    run_dir = os.path.join(settings.RUN_BASE_DIR, str(task_id), str(effective_run_id))
-    if not os.path.isdir(run_dir):
-        raise HTTPException(status_code=404, detail="Run directory not found")
+    hot_run_dir = os.path.join(settings.RUN_BASE_DIR, str(task_id), str(effective_run_id))
+    if os.path.isdir(hot_run_dir):
+        return task, effective_run_id, hot_run_dir
 
-    return task, effective_run_id, run_dir
+    run_dir_archive: Optional[str] = None
+    try:
+        run_uuid = uuid.UUID(str(effective_run_id))
+        task_run = db.query(TaskRun).filter(TaskRun.id == run_uuid, TaskRun.task_id == task_id).first()
+        if task_run and getattr(task_run, "run_dir_archive", None):
+            run_dir_archive = str(task_run.run_dir_archive)
+    except Exception:
+        run_dir_archive = None
+
+    if run_dir_archive and os.path.isdir(run_dir_archive):
+        return task, effective_run_id, run_dir_archive
+
+    cold_run_dir = os.path.join(settings.ARCHIVE_RUNS_DIR, str(task_id), str(effective_run_id))
+    if os.path.isdir(cold_run_dir):
+        return task, effective_run_id, cold_run_dir
+
+    raise HTTPException(status_code=404, detail="Run directory not found")
 
 def _safe_join(base_dir: str, rel_path: str) -> str:
     base_abs = os.path.abspath(base_dir)
@@ -145,6 +169,302 @@ def _get_task_or_404(*, task_id: str, db: Session, current_user: User) -> Task:
     if current_user.role != "admin" and task.user_id != current_user.id:
         raise HTTPException(status_code=403, detail="Not authorized")
     return task
+
+def _matlab_quote(value: Any) -> str:
+    return "'" + str(value).replace("'", "''") + "'"
+
+def _resolve_task_nd2_path(task: Task) -> str:
+    if task.nd2_local_path and os.path.isfile(str(task.nd2_local_path)):
+        return str(task.nd2_local_path)
+    filename = os.path.basename(str(task.nd2_object_key or ""))
+    if filename:
+        hot_path = os.path.join(settings.RUN_BASE_DIR, str(task.id), "images", filename)
+        if os.path.isfile(hot_path):
+            return hot_path
+        cold_path = os.path.join(settings.ARCHIVE_ND2_DIR, str(task.id), filename)
+        if os.path.isfile(cold_path):
+            return cold_path
+    raise HTTPException(status_code=404, detail="Local ND2 file is not available for preview")
+
+def _validate_nd2_preview_environment(nd2_path: str) -> None:
+    if not os.path.isfile(nd2_path):
+        raise HTTPException(status_code=404, detail=f"ND2 file is not available: {nd2_path}")
+    if not os.path.isfile(settings.MATLAB_BIN):
+        raise HTTPException(
+            status_code=503,
+            detail=f"MATLAB executable is not available for ND2 preview: {settings.MATLAB_BIN}",
+        )
+    if not os.path.isdir(settings.BFMATLAB_ROOT):
+        raise HTTPException(
+            status_code=503,
+            detail=f"bfmatlab root is not available for ND2 preview: {settings.BFMATLAB_ROOT}",
+        )
+
+def _nd2_preview_output_ready(out_path: str) -> bool:
+    try:
+        return os.path.isfile(out_path) and os.path.getsize(out_path) > 0
+    except OSError:
+        return False
+
+def _safe_nd2_preview_token(value: Any) -> str:
+    raw = str(value)
+    return "".join(ch if ch.isalnum() or ch in {"-", "_", "."} else "_" for ch in raw)[:120]
+
+def _nd2_source_stamp(nd2_path: str) -> str:
+    try:
+        stat = os.stat(nd2_path)
+        return f"mtime{stat.st_mtime_ns}_size{stat.st_size}"
+    except OSError:
+        return "missing"
+
+def _nd2_preview_cache_path(
+    *,
+    task_id: str,
+    nd2_path: str,
+    quality: str,
+    max_px: int,
+    series: int,
+    z: int,
+    c: int,
+    c2: int,
+    t: int,
+    mode: str,
+    lut: str,
+    lut2: str,
+    min_value: str,
+    max_value: str,
+) -> str:
+    safe_quality = quality if quality in _ND2_PREVIEW_QUALITIES else "fast"
+    cache_dir = os.path.join(settings.RUN_BASE_DIR, str(task_id), "nd2_preview_cache", safe_quality)
+    os.makedirs(cache_dir, exist_ok=True)
+    stamp = _safe_nd2_preview_token(_nd2_source_stamp(nd2_path))
+    cache_name = (
+        f"{stamp}_q{safe_quality}_mp{int(max_px)}_s{int(series)}_z{int(z)}_"
+        f"mode{_safe_nd2_preview_token(mode)}_c{int(c)}_c2{int(c2)}_t{int(t)}_"
+        f"lut{_safe_nd2_preview_token(lut)}_lut2{_safe_nd2_preview_token(lut2)}_"
+        f"min{_safe_nd2_preview_token(min_value)}_max{_safe_nd2_preview_token(max_value)}.png"
+    )
+    return os.path.join(cache_dir, cache_name)
+
+def _java_nd2_helper_paths() -> tuple[str, str, str, str]:
+    script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "scripts"))
+    source_path = os.path.join(script_dir, "java", "Nd2PreviewHelper.java")
+    class_dir = os.path.join(settings.RUN_BASE_DIR, ".java_nd2_preview_classes")
+    class_file = os.path.join(class_dir, "Nd2PreviewHelper.class")
+    jar_path = os.path.join(settings.BFMATLAB_ROOT, "bioformats_package.jar")
+    return source_path, class_dir, class_file, jar_path
+
+def _ensure_java_nd2_preview_helper_compiled(nd2_path: str) -> tuple[str, str]:
+    if not os.path.isfile(nd2_path):
+        raise HTTPException(status_code=404, detail=f"ND2 file is not available: {nd2_path}")
+    source_path, class_dir, class_file, jar_path = _java_nd2_helper_paths()
+    if not os.path.isfile(source_path):
+        raise HTTPException(status_code=500, detail="Java ND2 preview helper is missing")
+    if not os.path.isfile(jar_path):
+        raise HTTPException(status_code=503, detail=f"Bio-Formats jar is not available: {jar_path}")
+    if shutil.which("java") is None or shutil.which("javac") is None:
+        raise HTTPException(status_code=503, detail="Java runtime/compiler is not available for ND2 preview")
+    os.makedirs(class_dir, exist_ok=True)
+    with _java_nd2_compile_lock:
+        try:
+            needs_compile = (
+                not os.path.isfile(class_file)
+                or os.path.getmtime(class_file) < os.path.getmtime(source_path)
+            )
+        except OSError:
+            needs_compile = True
+        if needs_compile:
+            proc = subprocess.run(
+                ["javac", "-cp", jar_path, "-d", class_dir, source_path],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                timeout=60,
+                check=False,
+            )
+            if proc.returncode != 0:
+                detail = (proc.stdout or "").strip()
+                raise HTTPException(status_code=500, detail=f"Java ND2 preview helper compile failed: {detail[-2000:]}")
+    return class_dir, jar_path
+
+def _run_java_nd2_preview_helper(
+    *,
+    command: str,
+    nd2_path: str,
+    out_path: str,
+    series: int = 0,
+    z: int = 0,
+    c: int = 0,
+    c2: int = 1,
+    t: int = 0,
+    mode: str = "single",
+    lut: str = "gray",
+    lut2: str = "red",
+    min_value: str = "auto",
+    max_value: str = "auto",
+    quality: str = "fast",
+    max_px: int = 512,
+    timeout: int = 120,
+) -> None:
+    class_dir, jar_path = _ensure_java_nd2_preview_helper_compiled(nd2_path)
+    os.makedirs(os.path.dirname(out_path), exist_ok=True)
+    classpath = os.pathsep.join([class_dir, jar_path])
+    if command == "metadata":
+        args = ["java", "-cp", classpath, "Nd2PreviewHelper", "metadata", nd2_path, out_path]
+    else:
+        args = [
+            "java", "-cp", classpath, "Nd2PreviewHelper", "preview",
+            nd2_path,
+            out_path,
+            str(series),
+            str(z),
+            str(c),
+            str(c2),
+            str(t),
+            mode,
+            lut,
+            lut2,
+            min_value,
+            max_value,
+            quality,
+            str(max_px),
+            _nd2_source_stamp(nd2_path),
+        ]
+    try:
+        proc = subprocess.run(
+            args,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=timeout,
+            check=False,
+        )
+    except subprocess.TimeoutExpired:
+        if _nd2_preview_output_ready(out_path):
+            return
+        raise HTTPException(status_code=504, detail="Java ND2 preview helper timed out")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to run Java ND2 preview helper: {type(e).__name__}: {str(e)}")
+    if proc.returncode != 0:
+        if _nd2_preview_output_ready(out_path):
+            return
+        detail = (proc.stdout or "").strip()
+        raise HTTPException(status_code=500, detail=f"Java ND2 preview helper failed: {detail[-2000:]}")
+
+def _run_nd2_preview_helper(
+    *,
+    mode: str,
+    nd2_path: str,
+    out_path: str,
+    series: int = 0,
+    z: int = 0,
+    c: int = 0,
+    t: int = 0,
+    lut: str = "gray",
+    min_value: str = "auto",
+    max_value: str = "auto",
+    c2: int = 1,
+    lut2: str = "red",
+) -> None:
+    script_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "..", "scripts"))
+    helper_path = os.path.join(script_dir, "nd2_preview_helper.m")
+    if not os.path.isfile(helper_path):
+        raise HTTPException(status_code=500, detail="ND2 preview helper is missing")
+    _validate_nd2_preview_environment(nd2_path)
+    matlab_bin = settings.MATLAB_BIN
+    bfmatlab_root = settings.BFMATLAB_ROOT
+    cmd_expr = (
+        "try, "
+        f"addpath(genpath({_matlab_quote(script_dir)})); "
+        f"nd2_preview_helper({_matlab_quote(mode)}, {_matlab_quote(nd2_path)}, {_matlab_quote(out_path)}, "
+        f"{_matlab_quote(series)}, {_matlab_quote(z)}, {_matlab_quote(c)}, {_matlab_quote(t)}, "
+        f"{_matlab_quote(lut)}, {_matlab_quote(min_value)}, {_matlab_quote(max_value)}, {_matlab_quote(bfmatlab_root)}, "
+        f"{_matlab_quote(c2)}, {_matlab_quote(lut2)}); "
+        "catch e, disp(getReport(e)); exit(1); end; exit(0);"
+    )
+    try:
+        proc = subprocess.run(
+            [matlab_bin, "-nodisplay", "-nosplash", "-nodesktop", "-r", cmd_expr],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=180,
+            check=False,
+        )
+    except subprocess.TimeoutExpired:
+        if _nd2_preview_output_ready(out_path):
+            return
+        raise HTTPException(status_code=504, detail="ND2 preview helper timed out")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Failed to run ND2 preview helper: {type(e).__name__}: {str(e)}")
+    if proc.returncode != 0:
+        if _nd2_preview_output_ready(out_path):
+            return
+        detail = (proc.stdout or "").strip()
+        raise HTTPException(status_code=500, detail=f"ND2 preview helper failed: {detail[-2000:]}")
+
+def _prefetch_nd2_fast_previews(
+    *,
+    task_id: str,
+    nd2_path: str,
+    series_values: list[int],
+    z: int = 0,
+    t: int = 0,
+    max_px: int = 512,
+) -> None:
+    if not _nd2_preview_prefetch_semaphore.acquire(blocking=False):
+        return
+    try:
+        variants = [
+            {"mode": "single", "c": 0, "c2": 1, "lut": "green", "lut2": "red"},
+            {"mode": "single", "c": 1, "c2": 0, "lut": "red", "lut2": "green"},
+            {"mode": "merge", "c": 0, "c2": 1, "lut": "green", "lut2": "red"},
+        ]
+        for series in series_values:
+            if series < 0:
+                continue
+            for variant in variants:
+                cache_path = _nd2_preview_cache_path(
+                    task_id=task_id,
+                    nd2_path=nd2_path,
+                    quality="fast",
+                    max_px=max_px,
+                    series=series,
+                    z=z,
+                    c=variant["c"],
+                    c2=variant["c2"],
+                    t=t,
+                    mode=variant["mode"],
+                    lut=variant["lut"],
+                    lut2=variant["lut2"],
+                    min_value="auto",
+                    max_value="auto",
+                )
+                if _nd2_preview_output_ready(cache_path):
+                    continue
+                try:
+                    _run_java_nd2_preview_helper(
+                        command="preview",
+                        nd2_path=nd2_path,
+                        out_path=cache_path,
+                        series=series,
+                        z=z,
+                        c=variant["c"],
+                        c2=variant["c2"],
+                        t=t,
+                        mode=variant["mode"],
+                        lut=variant["lut"],
+                        lut2=variant["lut2"],
+                        min_value="auto",
+                        max_value="auto",
+                        quality="fast",
+                        max_px=max_px,
+                        timeout=120,
+                    )
+                except Exception as e:
+                    logger.warning("ND2 fast preview prefetch failed for task %s series %s: %s", task_id, series, e)
+    finally:
+        _nd2_preview_prefetch_semaphore.release()
 
 def _maybe_update_task_progress(db: Session, task: Task, task_id: str, progress: int) -> None:
     now = int(time.time())
@@ -450,6 +770,13 @@ def read_queue_logs(
     logs = query.order_by(TaskRun.created_at.desc()).limit(limit).all()
     return logs
 
+@router.get("/queue/status")
+def read_queue_status(
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    return QueueService.get_queue_status(db)
+
 @router.put("/{task_id}/queue-info")
 def update_task_queue_info(
     task_id: str,
@@ -627,7 +954,7 @@ def auto_run_task(
 
     return {
         "task_id": task.id,
-        "run_id": run_id,
+        "run_id": str(run_id),
         "nd2_object_key": nd2_object_key,
         "params_key": params_key,
         "status": "queued",
@@ -919,6 +1246,21 @@ def run_final_task(
         logger.error(f"Failed to submit final task: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@router.post("/{task_id}/video/run")
+def run_video_task_endpoint(
+    task_id: str,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    task = _get_task_or_404(task_id=task_id, db=db, current_user=current_user)
+    params = _read_local_params_cache(task_id) or {}
+    try:
+        run_id = QueueService.submit_task(db, task, "video", params_snapshot=params)
+        return {"status": "queued", "run_id": run_id}
+    except Exception as e:
+        logger.error(f"Failed to submit video task: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 @router.post("/{task_id}/stop")
 def stop_task(
     task_id: str,
@@ -1065,30 +1407,162 @@ def read_run_log(
 @router.get("/{task_id}/transfer/status")
 def get_transfer_status(
     task_id: str,
+    run_id: Optional[str] = Query(default=None),
     db: Session = Depends(deps.get_db),
     current_user: User = Depends(deps.get_current_user),
 ):
-    task = db.query(Task).filter(Task.id == task_id).first()
-    if not task:
-        raise HTTPException(status_code=404, detail="Task not found")
-        
-    # Check current run transfer status
-    if task.run_id_current:
-        run_base = getattr(settings, "RUN_BASE_DIR", "/data/runs")
-        status_path = os.path.join(run_base, task_id, str(task.run_id_current), "transfer_nd2.json")
-        if os.path.exists(status_path):
-            try:
-                with open(status_path, "r", encoding="utf-8") as f:
-                    return json.load(f)
-            except Exception:
-                pass
-                
-    # Fallback
-    return {"state": "ready", "message": "Ready"}
+    task = _get_task_or_404(task_id=task_id, db=db, current_user=current_user)
+
+    effective_run_id = run_id or (str(task.run_id_current) if task.run_id_current else None)
+    if not effective_run_id:
+        return {"state": "ready", "message": "Ready", "hot_download": {"state": "ready", "message": "Ready"}, "cold_archive": None}
+
+    run_base = getattr(settings, "RUN_BASE_DIR", "/data/runs")
+    candidates = [
+        os.path.join(run_base, task_id, str(effective_run_id)),
+        os.path.join(settings.ARCHIVE_RUNS_DIR, task_id, str(effective_run_id)),
+    ]
+    try:
+        run_uuid = uuid.UUID(str(effective_run_id))
+        task_run = db.query(TaskRun).filter(TaskRun.id == run_uuid, TaskRun.task_id == task_id).first()
+        if task_run and getattr(task_run, "run_dir_archive", None):
+            candidates.insert(0, str(task_run.run_dir_archive))
+    except Exception:
+        pass
+
+    def read_status(filename: str) -> Optional[dict[str, Any]]:
+        for run_dir in candidates:
+            status_path = os.path.join(run_dir, filename)
+            if os.path.exists(status_path):
+                try:
+                    with open(status_path, "r", encoding="utf-8") as f:
+                        return json.load(f)
+                except Exception:
+                    continue
+        return None
+
+    hot_download = read_status("transfer_nd2.json") or {"state": "ready", "message": "Ready"}
+    cold_archive = read_status("cold_archive_nd2.json")
+    response = dict(hot_download)
+    response["run_id"] = str(effective_run_id)
+    response["hot_download"] = hot_download
+    response["cold_archive"] = cold_archive
+    return response
 
 @router.post("/{task_id}/transfer/cancel")
 def cancel_transfer(task_id: str):
     return {"status": "ok"}
+
+@router.get("/{task_id}/nd2/metadata")
+def read_nd2_metadata(
+    task_id: str,
+    background_tasks: BackgroundTasks,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    task = _get_task_or_404(task_id=task_id, db=db, current_user=current_user)
+    nd2_path = _resolve_task_nd2_path(task)
+    cache_dir = os.path.join(settings.RUN_BASE_DIR, str(task_id), "nd2_preview_cache")
+    os.makedirs(cache_dir, exist_ok=True)
+    cache_path = os.path.join(cache_dir, "metadata.json")
+    try:
+        if os.path.exists(cache_path) and os.path.getmtime(cache_path) >= os.path.getmtime(nd2_path):
+            with open(cache_path, "r", encoding="utf-8") as f:
+                metadata = json.load(f)
+            background_tasks.add_task(
+                _prefetch_nd2_fast_previews,
+                task_id=str(task_id),
+                nd2_path=nd2_path,
+                series_values=[0],
+                max_px=512,
+            )
+            return metadata
+    except Exception:
+        pass
+    _run_java_nd2_preview_helper(command="metadata", nd2_path=nd2_path, out_path=cache_path)
+    with open(cache_path, "r", encoding="utf-8") as f:
+        metadata = json.load(f)
+    background_tasks.add_task(
+        _prefetch_nd2_fast_previews,
+        task_id=str(task_id),
+        nd2_path=nd2_path,
+        series_values=[0],
+        max_px=512,
+    )
+    return metadata
+
+@router.get("/{task_id}/nd2/preview")
+def read_nd2_preview(
+    task_id: str,
+    background_tasks: BackgroundTasks,
+    series: int = Query(default=0, ge=0),
+    z: int = Query(default=0, ge=0),
+    c: int = Query(default=0, ge=0),
+    c2: int = Query(default=1, ge=0),
+    t: int = Query(default=0, ge=0),
+    mode: str = Query(default="single"),
+    lut: str = Query(default="gray"),
+    lut2: str = Query(default="red"),
+    min: str = Query(default="auto"),
+    max: str = Query(default="auto"),
+    quality: str = Query(default="fast"),
+    max_px: int = Query(default=512, ge=128, le=4096),
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    task = _get_task_or_404(task_id=task_id, db=db, current_user=current_user)
+    nd2_path = _resolve_task_nd2_path(task)
+    safe_mode = mode if mode in {"single", "merge"} else "single"
+    safe_lut = lut if lut in _ND2_PREVIEW_LUTS else "gray"
+    safe_lut2 = lut2 if lut2 in _ND2_PREVIEW_LUTS else "red"
+    safe_quality = quality if quality in _ND2_PREVIEW_QUALITIES else "fast"
+    safe_max_px = int(max_px)
+    cache_path = _nd2_preview_cache_path(
+        task_id=str(task_id),
+        nd2_path=nd2_path,
+        quality=safe_quality,
+        max_px=safe_max_px,
+        series=series,
+        z=z,
+        c=c,
+        c2=c2,
+        t=t,
+        mode=safe_mode,
+        lut=safe_lut,
+        lut2=safe_lut2,
+        min_value=min,
+        max_value=max,
+    )
+    if not _nd2_preview_output_ready(cache_path):
+        _run_java_nd2_preview_helper(
+            command="preview",
+            nd2_path=nd2_path,
+            out_path=cache_path,
+            series=series,
+            z=z,
+            c=c,
+            c2=c2,
+            t=t,
+            mode=safe_mode,
+            lut=safe_lut,
+            lut2=safe_lut2,
+            min_value=min,
+            max_value=max,
+            quality=safe_quality,
+            max_px=safe_max_px,
+            timeout=180 if safe_quality == "full" else 120,
+        )
+    if safe_quality == "fast":
+        background_tasks.add_task(
+            _prefetch_nd2_fast_previews,
+            task_id=str(task_id),
+            nd2_path=nd2_path,
+            series_values=[series - 1, series + 1],
+            z=z,
+            t=t,
+            max_px=safe_max_px,
+        )
+    return FileResponse(cache_path, media_type="image/png")
 
 @router.get("/{task_id}/artifacts/list")
 def list_run_artifacts(
@@ -1101,9 +1575,10 @@ def list_run_artifacts(
     output_dir = os.path.join(run_dir, "output")
     debug_dir = os.path.join(output_dir, "debug")
     final_dir = os.path.join(output_dir, "final")
+    video_dir = os.path.join(output_dir, "video")
 
-    videos: list[dict[str, str]] = []
-    csvs: list[dict[str, str]] = []
+    videos: list[dict[str, Any]] = []
+    csvs: list[dict[str, Any]] = []
     seen_paths: set[str] = set()
 
     def add_file(full_path: str, kind: str) -> None:
@@ -1114,12 +1589,21 @@ def list_run_artifacts(
         
         rel = os.path.relpath(full_path, run_dir)
         name = os.path.basename(full_path)
+        lower = name.lower()
         if kind == "video":
-            videos.append({"path": rel, "name": name})
+            mime = "video/mp4" if lower.endswith(".mp4") else "video/x-msvideo"
+            playable = lower.endswith(".mp4")
+            channel = None
+            if "c01" in lower or "ref" in lower:
+                channel = "C01"
+            elif "c02" in lower or "oth" in lower:
+                channel = "C02"
+            mode = "merge" if "merge" in lower else ("single" if channel else None)
+            videos.append({"path": rel, "name": name, "kind": "video", "mime": mime, "playable": playable, "channel": channel, "mode": mode})
         else:
-            csvs.append({"path": rel, "name": name})
+            csvs.append({"path": rel, "name": name, "kind": "csv", "mime": "text/csv"})
 
-    for d in [debug_dir, final_dir, run_dir]:
+    for d in [debug_dir, final_dir, video_dir, run_dir]:
         if not os.path.isdir(d):
             continue
         for root, _, files in os.walk(d):
@@ -1130,16 +1614,61 @@ def list_run_artifacts(
                 elif lower.endswith(".csv"):
                     add_file(os.path.join(root, fn), "csv")
 
-    def score_video(item: dict[str, str]) -> tuple[int, int]:
+    def score_video(item: dict[str, str]) -> tuple[int, int, int]:
         p = item["path"].lower()
         ext = 0 if p.endswith(".mp4") else 1
         pref = 0 if "output/debug/preview" in p else 1
-        return (pref, ext)
+        video_pref = 0 if "output/video/" in p else 1
+        return (pref, video_pref, ext)
 
     videos.sort(key=score_video)
     csvs.sort(key=lambda x: (0 if x["path"].lower().endswith("output/final/result.csv") else 1, x["path"].lower()))
 
     return {"run_id": effective_run_id, "videos": videos, "csvs": csvs}
+
+@router.get("/{task_id}/artifacts/archive")
+def download_run_artifact_archive(
+    task_id: str,
+    background_tasks: BackgroundTasks,
+    run_id: Optional[str] = Query(default=None),
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    _, effective_run_id, run_dir = _resolve_run_dir(task_id=task_id, run_id=run_id, db=db, current_user=current_user)
+
+    include_exact = {"runtime.log", "params.snapshot.json", "params.json", "video.params.json", "transfer_nd2.json", "cold_archive_nd2.json"}
+    include_ext = {".csv", ".mp4", ".avi", ".json"}
+    allowed_prefixes = ("output/final/", "output/debug/", "output/video/", "TrackDiag/")
+    exclude_ext = {".nd2", ".h5", ".hdf5", ".mat"}
+
+    fd, zip_path = tempfile.mkstemp(prefix=f"task_{task_id}_run_{effective_run_id}_", suffix=".zip")
+    os.close(fd)
+    try:
+        with zipfile.ZipFile(zip_path, "w", compression=zipfile.ZIP_DEFLATED) as zf:
+            for root, _, files in os.walk(run_dir):
+                for fn in files:
+                    full_path = os.path.join(root, fn)
+                    rel = os.path.relpath(full_path, run_dir).replace(os.sep, "/")
+                    base = os.path.basename(rel)
+                    ext = os.path.splitext(base.lower())[1]
+                    if ext in exclude_ext:
+                        continue
+                    include = base in include_exact or rel.startswith(allowed_prefixes) or (ext == ".json" and "/" not in rel)
+                    if not include:
+                        continue
+                    if ext not in include_ext and base not in include_exact:
+                        continue
+                    zf.write(full_path, rel)
+    except Exception:
+        try:
+            os.remove(zip_path)
+        except Exception:
+            pass
+        raise
+
+    background_tasks.add_task(os.remove, zip_path)
+    filename = f"task_{task_id}_run_{effective_run_id}_results.zip"
+    return FileResponse(zip_path, media_type="application/zip", filename=filename)
 
 @router.get("/{task_id}/artifacts/file")
 def read_run_artifact_file(

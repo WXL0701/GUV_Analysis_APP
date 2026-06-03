@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func
 
 from app.db.models import Task, TaskRun
-from app.worker.tasks import run_analysis_task
+from app.worker.tasks import run_analysis_task, run_video_task
 from app.services.autoexp_callback_service import maybe_send_autoexp_callback
 from app.core.config import settings
 
@@ -53,7 +53,7 @@ class QueueService:
         Args:
             db: Database session
             task: Task model instance
-            mode: 'debug' or 'final'
+            mode: 'debug', 'final' or 'video'
             params_snapshot: Snapshot of parameters for this run
             
         Returns:
@@ -85,7 +85,10 @@ class QueueService:
         # 3. Dispatch to Celery (Async)
         # Celery handles the FIFO queueing mechanism.
         try:
-            run_analysis_task.delay(str(task.id), mode, str(run_id))
+            if mode == "video":
+                run_video_task.delay(str(task.id), str(run_id))
+            else:
+                run_analysis_task.delay(str(task.id), mode, str(run_id))
         except Exception as e:
             logger.error(f"Failed to dispatch task {task.id} to Celery: {e}")
             new_run.status = "FAILED"

@@ -1,5 +1,5 @@
 import os
-from pydantic_settings import BaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "GUV Analysis Platform"
@@ -45,9 +45,16 @@ class Settings(BaseSettings):
 
     # Pipeline
     PIPELINE_ROOT: str = os.getenv("PIPELINE_ROOT", "/app/matlab_packages/GUV_Image_Processor_V1.1.2")
+    IMAGE_PROCESSOR_ROOT: str = os.getenv("IMAGE_PROCESSOR_ROOT", "/app/matlab_packages/GUV_Image_Processor_V1.2")
     RUN_BASE_DIR: str = os.getenv("RUN_BASE_DIR", "/app/data/tasks")
+    ARCHIVE_BASE_DIR: str = os.getenv("ARCHIVE_BASE_DIR", "/app/data/archive")
+    ARCHIVE_RUNS_DIR: str = os.getenv("ARCHIVE_RUNS_DIR", os.path.join(ARCHIVE_BASE_DIR, "runs"))
+    ARCHIVE_ND2_DIR: str = os.getenv("ARCHIVE_ND2_DIR", os.path.join(ARCHIVE_BASE_DIR, "nd2"))
+    ARCHIVE_USAGE_THRESHOLD_PERCENT: int = int(os.getenv("ARCHIVE_USAGE_THRESHOLD_PERCENT", "85"))
+    ARCHIVE_USAGE_TARGET_PERCENT: int = int(os.getenv("ARCHIVE_USAGE_TARGET_PERCENT", "85"))
+    BFMATLAB_ROOT: str = os.getenv("BFMATLAB_ROOT", "/opt/bfmatlab")
+    MATLAB_BIN: str = os.getenv("MATLAB_BIN", "/usr/local/MATLAB/R2024a/bin/matlab")
 
-    class Config:
-        env_file = ".env"
+    model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
 settings = Settings()

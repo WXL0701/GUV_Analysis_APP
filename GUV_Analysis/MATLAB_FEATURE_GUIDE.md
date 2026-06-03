@@ -1,21 +1,16 @@
-# MATLAB Version Selection Feature Guide
+# MATLAB Runtime Guide
 
 ## Overview
-We have introduced a new feature in the System Configuration interface to allow users to select between different MATLAB versions. This ensures that the analysis pipeline runs with the appropriate MATLAB runtime environment.
+This deployment uses a single MATLAB runtime: `R2024a`. The system no longer switches between multiple MATLAB versions.
 
 ## Features
 
-### 1. MATLAB Version Selection
-In the **System Config > MATLAB Environment** section, you will now find a **MATLAB Version** dropdown menu.
+### 1. MATLAB Runtime
+In the **System Config > MATLAB Environment** section, the runtime is fixed to `MATLAB R2024a`.
 
-- **Options**:
-  - **MATLAB R2018a**: Uses the runtime at `/usr/local/MATLAB/R2018a`.
-  - **MATLAB R2024a**: Uses the runtime at `/usr/local/MATLAB/R2024a`.
-  
 - **Behavior**:
-  - Selecting a version and changing it saves the preference to the system configuration (`system.matlab_version`).
-  - This setting is persistent and will be used for all future analysis tasks.
-  - The backend worker automatically switches between `matlab2018a` and `matlab2024a` commands based on your selection.
+  - The application always uses `/usr/local/MATLAB/R2024a/bin/matlab`.
+  - `system.matlab_version` is kept as `R2024a` for compatibility with existing configuration storage.
 
 ### 2. Enhanced Path Display
 The display logic for the **Package Version** (Pipeline Root) has been updated to ensure the full path is visible.
@@ -23,9 +18,9 @@ The display logic for the **Package Version** (Pipeline Root) has been updated t
 - Example: `\home\guv_Analysis\GUV_Analysis_APP\GUV_Analysis_V1.1.2`
 
 ## Compatibility
-- **Backward Compatibility**: If no version is selected (e.g., after a fresh install), the system defaults to **R2018a** logic (using `matlab` or `matlab2018a` command).
-- **Task Execution**: The selected version is applied dynamically at runtime. You can switch versions between tasks without restarting the server.
+- Existing migrated configuration values remain readable.
+- Task execution is pinned to `R2024a` even if an older version value is found in configuration.
 
 ## Troubleshooting
-- If tasks fail to start, ensure that the selected MATLAB version is correctly installed on the server at the specified path.
-- Check the `runtime.log` of the task to verify which MATLAB binary was used (e.g., `Configuration loaded: system.matlab_version=R2024a -> BIN=matlab2024a`).
+- If tasks fail to start, ensure that `R2024a` is correctly installed at `/usr/local/MATLAB/R2024a/bin/matlab`.
+- Check the `runtime.log` of the task to verify that `R2024a` is being used.

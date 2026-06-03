@@ -1,6 +1,6 @@
 services:
   redis:
-    image: redis:7
+    image: docker.1ms.run/library/redis:7
     ports: ["6379:6379"]
     command: ["redis-server", "--appendonly", "yes"]
     environment:
@@ -9,7 +9,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
 
   postgres:
-    image: postgres:16
+    image: docker.1ms.run/library/postgres:16
     environment:
       POSTGRES_USER: lab
       POSTGRES_PASSWORD: labpass
@@ -17,7 +17,7 @@ services:
       TZ: Asia/Shanghai
     ports: ["5432:5432"]
     volumes:
-      - ./data/pgdata:/var/lib/postgresql/data
+      - /home/GUV_Analysis_APP/runtime/postgres:/var/lib/postgresql/data
       - /etc/localtime:/etc/localtime:ro
 
   # minio:
@@ -37,10 +37,12 @@ services:
     build: .
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000
     volumes:
-      - .:/app
-      - ../data/tasks:/app/data/tasks
-      - ../../MATLAB_Package:/app/matlab_packages
-      - ../../../bfmatlab:/home/guv_Analysis/bfmatlab:ro
+      - /home/GUV_Analysis_APP/GUV_Analysis/backend:/app
+      - /home/GUV_Analysis_APP/runtime/tasks:/app/data/tasks
+      - /data/GUV_Analysis_APP/archive:/app/data/archive
+      - /home/GUV_Analysis_APP/MATLAB_Package:/app/matlab_packages
+      - /usr/local/MATLAB:/usr/local/MATLAB:ro
+      - /home/bfmatlab:/opt/bfmatlab:ro
       - /etc/localtime:/etc/localtime:ro
     ports:
       - "8000:8000"
@@ -61,8 +63,13 @@ services:
       - CELERY_BROKER_URL=redis://redis:6379/1
       - CELERY_RESULT_BACKEND=redis://redis:6379/2
       - RUN_BASE_DIR=/app/data/tasks
+      - ARCHIVE_BASE_DIR=/app/data/archive
+      - ARCHIVE_USAGE_THRESHOLD_PERCENT=85
+      - ARCHIVE_USAGE_TARGET_PERCENT=85
       - PIPELINE_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.1.2
       - IMAGE_PROCESSOR_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.2
+      - BFMATLAB_ROOT=/opt/bfmatlab
+      - MATLAB_BIN=/usr/local/MATLAB/R2024a/bin/matlab
       - AUTOEXP_CALLBACK_URL=http://10.30.70.120:30080/auto-exp/api/v1/notifications/callback/guv
 
   # Celery Worker for background tasks
@@ -70,11 +77,12 @@ services:
     build: .
     command: celery -A app.worker.celery_app worker --loglevel=info --concurrency=1
     volumes:
-      - .:/app
-      - ../data/tasks:/app/data/tasks
-      - ../../MATLAB_Package:/app/matlab_packages
+      - /home/GUV_Analysis_APP/GUV_Analysis/backend:/app
+      - /home/GUV_Analysis_APP/runtime/tasks:/app/data/tasks
+      - /data/GUV_Analysis_APP/archive:/app/data/archive
+      - /home/GUV_Analysis_APP/MATLAB_Package:/app/matlab_packages
       - /usr/local/MATLAB:/usr/local/MATLAB:ro
-      - ../../../bfmatlab:/home/guv_Analysis/bfmatlab:ro
+      - /home/bfmatlab:/opt/bfmatlab:ro
       - /etc/localtime:/etc/localtime:ro
     depends_on:
       - redis
@@ -93,8 +101,13 @@ services:
       - CELERY_BROKER_URL=redis://redis:6379/1
       - CELERY_RESULT_BACKEND=redis://redis:6379/2
       - RUN_BASE_DIR=/app/data/tasks
+      - ARCHIVE_BASE_DIR=/app/data/archive
+      - ARCHIVE_USAGE_THRESHOLD_PERCENT=85
+      - ARCHIVE_USAGE_TARGET_PERCENT=85
       - PIPELINE_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.1.2
       - IMAGE_PROCESSOR_ROOT=/app/matlab_packages/GUV_Image_Processor_V1.2
+      - BFMATLAB_ROOT=/opt/bfmatlab
+      - MATLAB_BIN=/usr/local/MATLAB/R2024a/bin/matlab
       - AUTOEXP_CALLBACK_URL=http://10.30.70.120:30080/auto-exp/api/v1/notifications/callback/guv
 
   # Frontend Nginx Service

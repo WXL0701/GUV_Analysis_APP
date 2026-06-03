@@ -25,7 +25,26 @@ function MasterTable = GUV_Pipeline(varargin)
 % 自动把本脚本所在目录及其子目录加入 MATLAB 路径（避免找不到函数）
 thisDir = fileparts(mfilename('fullpath'));
 addpath(genpath(thisDir));
-addpath(genpath('/home/guv_Analysis/bfmatlab/'));
+bfmatlabDir = getenv('BFMATLAB_ROOT');
+if isempty(bfmatlabDir)
+    repoRoot = fileparts(fileparts(thisDir));
+    candidateDirs = { ...
+        fullfile(repoRoot, 'bfmatlab'), ...
+        '/home/bfmatlab', ...
+        '/home/GUV_Analysis_APP/bfmatlab' ...
+    };
+    for i = 1:numel(candidateDirs)
+        if exist(candidateDirs{i}, 'dir')
+            bfmatlabDir = candidateDirs{i};
+            break;
+        end
+    end
+end
+if ~isempty(bfmatlabDir) && exist(bfmatlabDir, 'dir')
+    addpath(genpath(bfmatlabDir));
+else
+    warning('bfmatlab directory not found. ND2/LIF inputs may fail. Set BFMATLAB_ROOT to the correct path.');
+end
 
 % -------------------- 解析输入参数 --------------------
 Cfg = [];

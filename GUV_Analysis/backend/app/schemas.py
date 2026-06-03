@@ -49,8 +49,8 @@ class TaskAutoRunRequest(BaseModel):
 
     @validator('run_mode')
     def validate_run_mode(cls, v):
-        if v not in ("final", "debug"):
-            raise ValueError('run_mode 必须为 "final" 或 "debug"')
+        if v not in ("final", "debug", "video"):
+            raise ValueError('run_mode 必须为 "final"、"debug" 或 "video"')
         return v
 
 class TaskAutoRunResponse(BaseModel):

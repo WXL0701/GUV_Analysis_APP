@@ -9,9 +9,11 @@ PARAMS_PATH="$5"
 BASE_DIR="$6"
 
 # Default values if env vars not set
-PIPELINE_ROOT="${PIPELINE_ROOT:-/home/guv_Analysis/GUV_Analysis_APP/MATLAB_Package/GUV_Image_Processor_V1.1.2}"
+PIPELINE_ROOT="${PIPELINE_ROOT:-/home/GUV_Analysis_APP/MATLAB_Package/GUV_Image_Processor_V1.1.2}"
+BFMATLAB_ROOT="${BFMATLAB_ROOT:-/home/bfmatlab}"
 MATLAB_BIN="${MATLAB_BIN:-matlab}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export BFMATLAB_ROOT
 
 echo "Starting MATLAB Task: $TASK_ID ($MODE)"
 cd "$PIPELINE_ROOT"

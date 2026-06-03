@@ -1,7 +1,7 @@
 export interface ParamSchema {
     key: string;
     label: string;
-    type: 'number' | 'text' | 'boolean' | 'select' | 'array_number' | 'array_select' | 'array_string' | 'slider';
+    type: 'number' | 'text' | 'boolean' | 'select' | 'multi_select' | 'array_number' | 'array_select' | 'array_string' | 'slider';
     tooltip: string;
     default?: any;
     min?: number;
@@ -226,6 +226,22 @@ export const paramGroups: ParamGroup[] = [
                 tooltip: 'Minimum length of a valid track.', 
                 default: 10 
             },
+            {
+                key: 'StartFrame',
+                label: 'Start Frame',
+                type: 'array_number',
+                tooltip: 'Optional first frame for tracking, 1-based. Leave empty to start from the first available frame.',
+                default: [],
+                allowEmpty: true
+            },
+            {
+                key: 'EndFrame',
+                label: 'End Frame',
+                type: 'array_number',
+                tooltip: 'Optional last frame for tracking, 1-based. Leave empty to track through the last available frame.',
+                default: [],
+                allowEmpty: true
+            },
              { 
                 key: 'Opts.EstimateGlobalDrift', 
                 label: 'Estimate Drift', 
@@ -345,30 +361,121 @@ export const paramGroups: ParamGroup[] = [
                 key: 'Enable',
                 label: 'Enable Video',
                 type: 'boolean',
-                tooltip: 'Enable final video generation (Merge/Contrast adjusted).',
+                tooltip: 'Legacy switch retained for compatibility. Independent video mode can run even when this is off.',
                 default: false
             },
             {
                 key: 'Format',
                 label: 'Format',
                 type: 'select',
-                options: ['mp4', 'avi'],
-                tooltip: 'Video output format.',
+                options: ['mp4'],
+                tooltip: 'Independent video mode currently outputs browser-compatible MP4.',
                 default: 'mp4'
             },
             {
                 key: 'FPS',
                 label: 'FPS',
                 type: 'number',
-                tooltip: 'Frames per second for final video.',
+                tooltip: 'Frames per second for independent video mode.',
                 default: 10
+            },
+            {
+                key: 'MaxPx',
+                label: 'Max Size (px)',
+                type: 'number',
+                tooltip: 'Maximum video width/height. 720 is fast for preview; increase for higher quality.',
+                default: 720
+            },
+            {
+                key: 'Quality',
+                label: 'Quality',
+                type: 'number',
+                min: 1,
+                max: 100,
+                tooltip: 'Video quality from 1-100. Higher is larger/slower.',
+                default: 90
+            },
+            {
+                key: 'Tasks',
+                label: 'Video Types',
+                type: 'multi_select',
+                options: ['C1', 'C2', 'Merge'],
+                tooltip: 'Select single-channel and/or merge videos to generate.',
+                default: ['Merge']
+            },
+            {
+                key: 'SeriesList',
+                label: 'XY Series',
+                type: 'array_number',
+                tooltip: 'Optional XY list. Leave empty to generate all XY. Use 1-based values, e.g. [1, 2, 3].',
+                default: [],
+                allowEmpty: true
+            },
+            {
+                key: 'FrameRange',
+                label: 'Frame Range',
+                type: 'array_number',
+                tooltip: 'Optional 1-based frame range [start, end]. Leave empty for all frames.',
+                default: [],
+                allowEmpty: true
             },
             {
                 key: 'UseFrameStoreOnly',
                 label: 'Use FrameStore Only',
                 type: 'boolean',
-                tooltip: 'Generate video using only the fast FrameStore cache.',
+                tooltip: 'Reserved for future versions. Current independent video mode reads ND2 directly.',
                 default: false
+            },
+            {
+                key: 'ScaleBar.Enable',
+                label: 'Scale Bar',
+                type: 'boolean',
+                tooltip: 'Draw a scale bar when pixel size is available.',
+                default: true
+            },
+            {
+                key: 'ScaleBar.Length_um',
+                label: 'Scale Bar (um)',
+                type: 'number',
+                tooltip: 'Scale bar length in micrometers.',
+                default: 50
+            },
+            {
+                key: 'ScaleBar.PixelSize_um',
+                label: 'Manual Pixel Size',
+                type: 'array_number',
+                tooltip: 'Optional manual pixel size [um/pixel]. Leave empty to use ND2 metadata or global PixelSize_um.',
+                default: [],
+                allowEmpty: true
+            },
+            {
+                key: 'TimeStamp.Enable',
+                label: 'Timestamp',
+                type: 'boolean',
+                tooltip: 'Draw time/frame label.',
+                default: true
+            },
+            {
+                key: 'TimeStamp.Interval_s',
+                label: 'Frame Interval (s)',
+                type: 'number',
+                tooltip: 'Seconds per frame for timestamp display.',
+                default: 600
+            },
+            {
+                key: 'TimeStamp.Unit',
+                label: 'Time Unit',
+                type: 'select',
+                options: ['s', 'min'],
+                tooltip: 'Timestamp unit.',
+                default: 'min'
+            },
+            {
+                key: 'TimeStamp.ShowFrameNumber',
+                label: 'Show Frame',
+                type: 'boolean',
+                tooltip: 'Also show the frame number.',
+                default: true
             }
         ]
     }

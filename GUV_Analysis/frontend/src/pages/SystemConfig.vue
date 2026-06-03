@@ -10,11 +10,10 @@
         <el-form-item label="MATLAB Version">
           <el-select 
             v-model="currentMatlabVersion" 
-            placeholder="Select MATLAB Version"
+            placeholder="MATLAB R2024a"
             style="width: 100%; max-width: 600px;"
             @change="handleMatlabVersionChange"
           >
-            <el-option label="MATLAB R2018a (/usr/local/MATLAB/R2018a)" value="R2018a" />
             <el-option label="MATLAB R2024a (/usr/local/MATLAB/R2024a)" value="R2024a" />
           </el-select>
         </el-form-item>
@@ -116,7 +115,7 @@ const submitting = ref(false)
 const isEdit = ref(false)
 const version = ref('Loading...')
 const currentPipelineRoot = ref('')
-const currentMatlabVersion = ref('R2018a')
+const currentMatlabVersion = ref('R2024a')
 const pipelineOptions = ref<{label: string, value: string}[]>([])
 
 const form = ref<AppConfig>({
@@ -144,10 +143,7 @@ const fetchVersion = async () => {
     if (res.data.pipeline_root) {
       currentPipelineRoot.value = res.data.pipeline_root
     }
-    // Also fetch current matlab version config if possible, 
-    // but usually we rely on fetchConfigs or a specific endpoint. 
-    // For now, let's assume fetchConfigs populates it or we default to R2018a.
-    // Actually, we should check configs for system.matlab_version
+    // MATLAB is fixed to R2024a on this deployment.
   } catch (e) {
     console.error(e)
     version.value = 'Unknown'

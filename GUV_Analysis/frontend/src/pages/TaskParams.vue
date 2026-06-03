@@ -8,397 +8,150 @@
       <el-button @click="$router.push('/tasks')">Back to List</el-button>
     </div>
 
-    <!-- Run History -->
-    <el-card style="margin-bottom: 20px;">
-        <template #header>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span>Run History</span>
-                <el-button type="danger" size="small" :disabled="selectedRuns.length === 0" @click="deleteSelectedRuns">Delete Selected</el-button>
-            </div>
-        </template>
-        <el-table 
-            :data="history" 
-            @selection-change="handleSelectionChange" 
-            style="width: 100%" 
-            stripe
-            highlight-current-row
-        >
-            <el-table-column type="selection" width="55" />
-            <el-table-column prop="created_at" label="Date" width="180" sortable>
-                <template #default="scope">
-                    {{ new Date(scope.row.created_at).toLocaleString() }}
-                </template>
-            </el-table-column>
-            <el-table-column 
-                prop="run_mode" 
-                label="Mode" 
-                width="100"
-                :filters="[{ text: 'Debug', value: 'debug' }, { text: 'Final', value: 'final' }]"
-                :filter-method="(value: any, row: any) => row.run_mode === value"
-            >
-                <template #default="scope">
-                    <el-tag :type="scope.row.run_mode === 'debug' ? 'warning' : 'success'">{{ scope.row.run_mode }}</el-tag>
-                </template>
-            </el-table-column>
-            <el-table-column prop="params_snapshot" label="Params" min-width="200">
-                <template #default="scope">
-                    <div v-if="scope.row.params_snapshot" style="display: flex; gap: 5px; flex-wrap: wrap;">
-                        <el-tag size="small" type="info" v-if="scope.row.params_snapshot.PixelSize_um">Px: {{ scope.row.params_snapshot.PixelSize_um }}</el-tag>
-                        <el-tag size="small" type="info" v-if="scope.row.params_snapshot.FrameInterval_s">Int: {{ scope.row.params_snapshot.FrameInterval_s }}s</el-tag>
-                        <el-tag size="small" type="warning" v-if="scope.row.params_snapshot.Debug?.Enable">Debug</el-tag>
-                    </div>
-                </template>
-            </el-table-column>
-            <el-table-column 
-                prop="status" 
-                label="Status" 
-                width="120"
-                :filters="[{ text: 'RUNNING', value: 'RUNNING' }, { text: 'SUCCEEDED', value: 'SUCCEEDED' }, { text: 'FAILED', value: 'FAILED' }]"
-                :filter-method="(value: any, row: any) => row.status === value"
-            >
-                <template #default="scope">
-                     <el-tag :type="scope.row.status === 'RUNNING' ? 'primary' : scope.row.status === 'FAILED' ? 'danger' : 'success'">{{ scope.row.status }}</el-tag>
-                </template>
-            </el-table-column>
-             <el-table-column prop="id" label="Run ID" width="280">
-                 <template #default="scope">
-                    <el-link type="primary" @click="viewRun(scope.row)">{{ scope.row.id }}</el-link>
-                 </template>
-            </el-table-column>
-            <el-table-column label="Actions">
-                <template #default="scope">
-                    <el-button size="small" type="primary" @click="viewRun(scope.row)">View</el-button>
-                    <el-button size="small" type="danger" @click="deleteRun(scope.row.id)">Delete</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-    </el-card>
+    <el-tabs v-model="activeDetailTab" class="detail-tabs">
+      <el-tab-pane label="概览" name="overview">
+        <RunHistoryPanel
+          :history="history"
+          :selected-count="selectedRuns.length"
+          @selection-change="handleSelectionChange"
+          @view-run="viewRun"
+          @delete-run="deleteRun"
+          @delete-selected="deleteSelectedRuns"
+        />
 
-    <el-card v-loading="loading">
-      <template #header>
-        <div class="card-header">
-          <span>Analysis Parameters</span>
-          <div class="actions">
-             <el-dropdown split-button type="warning" @click="resetToDefaults" @command="handlePresetCommand" trigger="click">
-                Reset Defaults
-                <template #dropdown>
-                    <el-dropdown-menu>
-                        <el-dropdown-item command="default">Reset to System Defaults</el-dropdown-item>
-                        <el-dropdown-item divided v-if="demos.length > 0" disabled>Preset Demos:</el-dropdown-item>
-                        <el-dropdown-item v-for="demo in demos" :key="demo.id" :command="demo">
-                            {{ demo.name }}
-                        </el-dropdown-item>
-                    </el-dropdown-menu>
-                </template>
-             </el-dropdown>
-             <el-button type="danger" @click="stopTask" :disabled="!isRunning">Stop Running</el-button>
-             <el-button type="primary" @click="saveParams">Save Params</el-button>
-          </div>
-        </div>
-      </template>
+        <ExecutionPanel
+          :params="params"
+          :is-running="isRunning"
+          :transfer-visible="transferVisible"
+          :transfer-tag-type="transferTagType"
+          :transfer-label="transferLabel"
+          :transfer-state="transferState"
+          :transfer-detail-text="transferDetailText"
+          :transfer-percent="transferPercent"
+          :transfer-progress-status="transferProgressStatus"
+          :cold-archive-detail-text="coldArchiveDetailText"
+          @run-debug="runDebug"
+          @run-final="runFinal"
+          @run-video="runVideo"
+        />
 
-      <!-- Parameter Form (Structured) -->
-      <div class="param-editor">
-          <!-- Common Global Settings (Always Visible) -->
-           <el-form label-position="top">
-                <el-row :gutter="20">
-                    <el-col :span="8">
-                        <el-form-item label="Pixel Size (um)">
-                            <el-input-number v-model="params.PixelSize_um" :step="0.01" />
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-form-item label="Frame Interval (s)">
-                            <el-input-number v-model="params.FrameInterval_s" :step="1" />
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-           </el-form>
+        <RuntimeLogPanel
+          :visible="!!(logs || isRunning || currentRunId)"
+          :displayed-logs="displayedLogs"
+          :current-run-id="currentRunId"
+          :is-current-run-selected="isCurrentRunSelected"
+          @refresh="fetchLogs"
+        />
 
-           <el-divider />
+        <RunStatusResultsPanel
+          :current-run-status="currentRunStatus"
+          :current-run-mode="currentRunMode"
+          :queue-position="queuePosition"
+          :is-current-run-selected="isCurrentRunSelected"
+          :video-artifacts="videoArtifacts"
+          @download-all="downloadAllResults"
+          @download-preview="downloadPreview"
+          @download-result="downloadResult"
+          @download-artifact="downloadArtifact"
+        />
+      </el-tab-pane>
 
-           <el-collapse v-model="activeNames">
-                <el-collapse-item v-for="group in paramGroups" :key="group.key" :title="group.label" :name="group.key">
-                    <el-form label-position="left" label-width="200px">
-                        <el-row :gutter="24">
-                            <el-col :span="12" v-for="param in group.params" :key="param.key">
-                                <el-form-item>
-                                    <template #label>
-                                        <div style="display: flex; align-items: center; gap: 5px;">
-                                            {{ param.label }}
-                                            <el-tooltip :content="param.tooltip" placement="top">
-                                                <el-icon><QuestionFilled /></el-icon>
-                                            </el-tooltip>
-                                        </div>
-                                    </template>
-                                    
-                                    <!-- Number -->
-                                    <el-input-number 
-                                        v-if="param.type === 'number'" 
-                                        :model-value="getParamValue(group.key, param.key)"
-                                        @update:model-value="(val: any) => setParamValue(group.key, param.key, val)"
-                                        :step="param.step || 1"
-                                    />
-
-                                    <!-- Slider -->
-                                    <div v-else-if="param.type === 'slider'" style="display: flex; align-items: center; width: 100%;">
-                                        <el-slider 
-                                            :model-value="getParamValue(group.key, param.key)"
-                                            @update:model-value="(val: any) => setParamValue(group.key, param.key, val)"
-                                            :min="param.min" :max="param.max" :step="param.step"
-                                            style="flex-grow: 1; margin-right: 15px;"
-                                        />
-                                        <el-input-number 
-                                            :model-value="getParamValue(group.key, param.key)"
-                                            @update:model-value="(val: any) => setParamValue(group.key, param.key, val)"
-                                            :step="param.step" size="small" style="width: 100px;"
-                                        />
-                                    </div>
-
-                                    <!-- Boolean (Switch) -->
-                                    <el-switch 
-                                        v-else-if="param.type === 'boolean'"
-                                        :model-value="getParamValue(group.key, param.key)"
-                                        @update:model-value="(val: any) => setParamValue(group.key, param.key, val)"
-                                    />
-
-                                    <!-- Text -->
-                                    <el-input 
-                                        v-else-if="param.type === 'text'"
-                                        :model-value="getParamValue(group.key, param.key)"
-                                        @update:model-value="(val: any) => setParamValue(group.key, param.key, val)"
-                                    />
-
-                                    <!-- Select -->
-                                    <el-select 
-                                        v-else-if="param.type === 'select'"
-                                        :model-value="getParamValue(group.key, param.key)"
-                                        @update:model-value="(val: any) => setParamValue(group.key, param.key, val)"
-                                    >
-                                        <el-option v-for="opt in param.options" :key="opt" :label="opt" :value="opt" />
-                                    </el-select>
-
-                                    <!-- Array Number (Text Input for now) -->
-                                    <el-input 
-                                        v-else-if="param.type === 'array_number'"
-                                        :model-value="getInputValue(group.key, param.key)"
-                                        @input="(val: string) => onInputValue(group.key, param.key, val)"
-                                        @change="(val: string) => onInputBlur(group.key, param.key, val, 'number')"
-                                        placeholder="e.g. 1, 2, 5"
-                                    />
-
-                                    <!-- Array Select -->
-                                     <div v-else-if="param.type === 'array_select'">
-                                          <el-input 
-                                            :model-value="getInputValue(group.key, param.key)"
-                                            @input="(val: string) => onInputValue(group.key, param.key, val)"
-                                            @change="(val: string) => onInputBlur(group.key, param.key, val, 'string')"
-                                            placeholder="e.g. inner, mem"
-                                        />
-                                     </div>
-
-                                    <!-- Array String (Tags) -->
-                                    <div v-else-if="param.type === 'array_string'">
-                                        <el-select
-                                            :model-value="getParamValue(group.key, param.key)"
-                                            @update:model-value="(val: any) => setParamValue(group.key, param.key, val)"
-                                            multiple
-                                            filterable
-                                            allow-create
-                                            default-first-option
-                                            :reserve-keyword="false"
-                                            placeholder="Type and press Enter to add..."
-                                        >
-                                            <el-option
-                                                v-for="item in (getParamValue(group.key, param.key) || [])"
-                                                :key="item"
-                                                :label="item"
-                                                :value="item"
-                                            />
-                                        </el-select>
-                                    </div>
-
-                                </el-form-item>
-                            </el-col>
-                        </el-row>
-                    </el-form>
-                </el-collapse-item>
-                
-                 <!-- Advanced JSON -->
-                <el-collapse-item title="Advanced Configuration (JSON)" name="advanced">
-                    <el-alert title="Edit raw JSON for full control." type="info" :closable="false" style="margin-bottom: 10px;" />
-                    <el-input
-                        v-model="paramsJson"
-                        type="textarea"
-                        :rows="15"
-                        @change="syncJsonToObj"
-                        placeholder="Loading parameters..."
-                    />
-                </el-collapse-item>
-           </el-collapse>
-      </div>
-      
-      <div class="run-controls">
-        <el-divider content-position="left">Execution</el-divider>
-        <div class="control-row">
-            <div v-if="params.Debug?.Enable" style="display: flex; gap: 20px; align-items: center;">
-                 <el-alert
-                    title="Debug Mode: Runs on a single XY position to generate a preview video."
-                    type="info"
-                    show-icon
-                    :closable="false"
-                    style="width: 400px;"
-                />
-                <el-button type="warning" @click="runDebug" :disabled="isRunning" size="large">
-                    <el-icon><VideoPlay /></el-icon> Run Debug (Preview)
-                </el-button>
-            </div>
-            
-            <div v-else style="display: flex; gap: 20px; align-items: center;">
-                 <el-alert
-                    title="Final Mode: Runs full analysis on all positions and generates CSV results."
-                    type="success"
-                    show-icon
-                    :closable="false"
-                     style="width: 400px;"
-                />
-                <el-button type="success" @click="runFinal" :disabled="isRunning" size="large">
-                    <el-icon><CaretRight /></el-icon> Run Final Analysis
-                </el-button>
-            </div>
-        </div>
-        <el-card v-if="transferVisible" style="margin-top: 12px;">
+      <el-tab-pane label="参数" name="params">
+        <el-card v-loading="loading">
           <template #header>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <span>ND2 文件传输</span>
-              <el-button v-if="transferCanCancel" size="small" type="danger" @click="cancelNd2Transfer">取消传输</el-button>
-            </div>
-          </template>
-          <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
-            <el-tag :type="transferTagType">{{ transferLabel }}</el-tag>
-            <!-- Detailed Error Log for Failed State -->
-            <div v-if="transferState === 'failed'" style="flex: 1; min-width: 300px;">
-                 <el-alert :title="transferDetailText" type="error" :closable="false" show-icon style="word-break: break-all;" />
-            </div>
-            <span v-else style="color: #666; font-size: 12px;">{{ transferDetailText }}</span>
-          </div>
-          <div v-if="typeof transferPercent === 'number'" style="margin-top: 10px;">
-            <el-progress :percentage="transferPercent" :status="transferProgressStatus" />
-          </div>
-        </el-card>
-      </div>
-
-      <!-- Debug Result: Video Preview -->
-      <el-card v-if="currentRunStatus === 'SUCCEEDED' && currentRunMode === 'debug'" style="margin-top: 20px;" v-loading="artifactsLoading">
-          <template #header>
-              <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span>Debug Video Preview</span>
-                <el-button size="small" @click="fetchArtifacts">Refresh</el-button>
+            <div class="card-header">
+              <span>MATLAB 分析参数</span>
+              <div class="actions">
+                 <el-dropdown split-button type="warning" @click="resetToDefaults" @command="handlePresetCommand" trigger="click">
+                    Reset Defaults
+                    <template #dropdown>
+                        <el-dropdown-menu>
+                            <el-dropdown-item command="default">Reset to System Defaults</el-dropdown-item>
+                            <el-dropdown-item divided v-if="demos.length > 0" disabled>Preset Demos:</el-dropdown-item>
+                            <el-dropdown-item v-for="demo in demos" :key="demo.id" :command="demo">
+                                {{ demo.name }}
+                            </el-dropdown-item>
+                        </el-dropdown-menu>
+                    </template>
+                 </el-dropdown>
+                 <el-button type="danger" @click="stopTask" :disabled="!isRunning">Stop Running</el-button>
+                 <el-button type="primary" @click="saveParams">Save Params</el-button>
               </div>
+            </div>
           </template>
-          
-            <div v-if="videoArtifacts.length === 0">
-                <el-empty description="No debug videos found" />
+          <ParamGroupsEditor
+            :groups="matlabParamGroups"
+            :params="params"
+            v-model:active-names="activeNames"
+            v-model:params-json="paramsJson"
+            show-global
+            show-advanced
+            @sync-json="syncJsonToObj"
+          />
+        </el-card>
+
+        <el-card class="section-card" v-loading="loading">
+          <template #header>
+            <div class="card-header">
+              <span>独立 Video 生成参数</span>
+              <div class="actions">
+                <el-button type="primary" @click="saveParams">Save Video Params</el-button>
+                <el-button type="success" @click="runVideo" :disabled="isRunning">生成视频</el-button>
+              </div>
             </div>
-            <div v-else>
-                <div style="margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center;">
-                    <el-radio-group v-model="selectedVideoChannel">
-                        <el-radio-button label="C01">Channel C01 (Ref)</el-radio-button>
-                        <el-radio-button label="C02">Channel C02</el-radio-button>
-                    </el-radio-group>
-                    <el-button @click="toggleFullscreen" :icon="FullScreen" circle title="Toggle Fullscreen" />
-                </div>
-                
-                <div v-if="currentVideoUrl" style="max-width: 800px; margin: 0 auto;">
-                    <video 
-                        ref="videoPlayer"
-                        :key="currentVideoUrl" 
-                        controls 
-                        style="width: 100%; border-radius: 4px; background: #000;"
-                        @error="handleVideoError"
-                    >
-                        <source :src="currentVideoUrl" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                    <div style="margin-top: 10px; text-align: center; color: #666;">
-                        Playing: {{ currentVideoName }}
-                    </div>
-                </div>
-                <div v-else>
-                        <el-alert title="Video for selected channel not found." type="warning" show-icon :closable="false" />
-                </div>
-            </div>
-          
-          <!-- Error Log -->
-          <div v-if="artifactLoadErrors.length > 0" style="margin-top: 20px;">
-              <el-alert 
-                v-for="(err, idx) in artifactLoadErrors" 
-                :key="idx"
-                :title="err"
-                type="error"
-                show-icon
-                style="margin-bottom: 5px;"
-              />
-               <el-button type="danger" size="small" @click="retryFetchArtifacts">Retry Connection</el-button>
-          </div>
-      </el-card>
+          </template>
+          <ParamGroupsEditor
+            :groups="videoParamGroups"
+            :params="params"
+            v-model:active-names="videoActiveNames"
+          />
+        </el-card>
+      </el-tab-pane>
 
+      <el-tab-pane label="预览" name="preview">
+        <Nd2PreviewPanel
+          v-model:series="nd2Series"
+          v-model:z="nd2Z"
+          v-model:c="nd2C"
+          v-model:c2="nd2C2"
+          v-model:t="nd2T"
+          v-model:lut="nd2Lut"
+          v-model:lut2="nd2Lut2"
+          v-model:preview-mode="nd2PreviewMode"
+          :loading="nd2PreviewLoading"
+          :error="nd2PreviewError"
+          :series-options="nd2SeriesOptions"
+          :quality="nd2PreviewQuality"
+          :max-z="nd2MaxZ"
+          :max-t="nd2MaxT"
+          :channel-options="nd2ChannelOptions"
+          :preview-url="nd2PreviewUrl"
+          :format-series-label="formatNd2SeriesLabel"
+          @refresh-fast="loadNd2FastPreview"
+          @load-full="loadNd2FullPreview"
+          @control-change="onNd2PreviewControlChange"
+          @series-change="onNd2SeriesChange"
+        />
 
-    </el-card>
-
-    <!-- Console / Logs -->
-    <el-card v-if="logs || isRunning || currentRunId" :style="{'margin-top': '20px', 'background-color': '#1e1e1e', 'border': isCurrentRunSelected ? '2px solid #409EFF' : '1px solid #333', 'color': '#e0e0e0'}">
-        <template #header>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-                <span>
-                    <el-icon><Monitor /></el-icon> Terminal Output 
-                    <span v-if="currentRunId" style="margin-left: 10px; font-size: 0.9em; color: #aaa;">
-                        (Currently Viewing: RunID {{ currentRunId }})
-                    </span>
-                </span>
-                <el-button size="small" type="info" text @click="fetchLogs">Refresh</el-button>
-            </div>
-        </template>
-        <div ref="logContainer" style="height: 300px; overflow-y: auto; font-family: 'Consolas', 'Monaco', monospace; white-space: pre-wrap; font-size: 12px; line-height: 1.4;">
-            {{ displayedLogs || 'No logs available for this run.' }}
-        </div>
-    </el-card>
-    
-    <!-- Status & Results -->
-    <el-card style="margin-top: 20px;" :style="{ border: isCurrentRunSelected ? '1px solid #409EFF' : '' }">
-        <template #header>
-            <span>
-                Run Status: <el-tag>{{ currentRunStatus }}</el-tag>
-                <span v-if="currentRunStatus === 'QUEUED' && queuePosition && queuePosition.position > 0" style="margin-left: 10px; font-size: 0.9em; color: #666;">
-                    <el-icon><Timer /></el-icon> Queue Position: {{ queuePosition.position }} / {{ queuePosition.total_queued }}
-                </span>
-            </span>
-        </template>
-        <div v-if="currentRunStatus === 'SUCCEEDED' || (typeof currentRunStatus === 'string' && currentRunStatus.includes('DEBUG'))">
-             <!-- Debug Mode Video -->
-             <el-button v-if="currentRunMode === 'debug'" @click="downloadPreview">Download Preview Video</el-button>
-             
-             <!-- Final Mode CSV -->
-             <el-button v-if="currentRunMode === 'final'" type="primary" @click="downloadResult">
-                <el-icon style="margin-right: 5px;"><Download /></el-icon> Download CSV
-             </el-button>
-
-             <!-- Final Mode Videos -->
-             <div v-if="currentRunMode === 'final' && videoArtifacts.length > 0" style="margin-top: 10px;">
-                <span style="margin-right: 10px; color: #666; font-size: 14px;">Output Videos:</span>
-                <el-button 
-                    v-for="vid in videoArtifacts" 
-                    :key="vid.path" 
-                    size="small" 
-                    type="info"
-                    plain
-                    @click="downloadArtifact(vid.path)"
-                >
-                    <el-icon style="margin-right: 5px;"><VideoPlay /></el-icon> {{ vid.name }}
-                </el-button>
-             </div>
-        </div>
-    </el-card>
+        <VideoPreviewPanel
+          v-model:selected-video-channel="selectedVideoChannel"
+          :visible="currentRunStatus === 'SUCCEEDED' && (currentRunMode === 'debug' || currentRunMode === 'video')"
+          :loading="artifactsLoading"
+          :current-run-mode="currentRunMode"
+          :video-artifacts="videoArtifacts"
+          :has-merge-video="hasMergeVideo"
+          :current-video-url="currentVideoUrl"
+          :current-video-mime="currentVideoMime"
+          :current-video-name="currentVideoName"
+          :download-only-videos="downloadOnlyVideos"
+          :artifact-load-errors="artifactLoadErrors"
+          @refresh="fetchArtifacts"
+          @retry="retryFetchArtifacts"
+          @video-error="handleVideoError"
+          @download-artifact="downloadArtifact"
+        />
+      </el-tab-pane>
+    </el-tabs>
 
   </div>
 </template>
@@ -406,27 +159,17 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch, nextTick, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { VideoPlay, CaretRight, Monitor, QuestionFilled, Download, FullScreen, Timer } from '@element-plus/icons-vue'
 import http from '@/api/http'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { paramGroups } from '@/config/taskParamsSchema'
 import defaultParams from '@/config/defaultParams.json'
-
-// --- Helper Functions for Nested Params ---
-const getNestedValue = (obj: any, path: string) => {
-    if (!obj) return undefined
-    return path.split('.').reduce((acc, part) => acc && acc[part], obj)
-}
-
-const setNestedValue = (obj: any, path: string, value: any) => {
-    const parts = path.split('.')
-    let current = obj
-    for (let i = 0; i < parts.length - 1; i++) {
-        if (!current[parts[i]]) current[parts[i]] = {}
-        current = current[parts[i]]
-    }
-    current[parts[parts.length - 1]] = value
-}
+import RunHistoryPanel from '@/components/task-detail/RunHistoryPanel.vue'
+import ExecutionPanel from '@/components/task-detail/ExecutionPanel.vue'
+import RunStatusResultsPanel from '@/components/task-detail/RunStatusResultsPanel.vue'
+import ParamGroupsEditor from '@/components/task-detail/ParamGroupsEditor.vue'
+import RuntimeLogPanel from '@/components/task-detail/RuntimeLogPanel.vue'
+import Nd2PreviewPanel from '@/components/task-detail/Nd2PreviewPanel.vue'
+import VideoPreviewPanel from '@/components/task-detail/VideoPreviewPanel.vue'
 
 const createDefaultParams = () => {
     // Deep copy the JSON template
@@ -447,23 +190,49 @@ const currentRunId = ref<string | null>(null)
 const logs = ref('')
 const lastLogChangeAt = ref<number>(Date.now())
 const stallWarning = ref('')
-const logContainer = ref<HTMLElement | null>(null)
 let logInterval: any = null
 let transferInterval: any = null
 const transfer = ref<any>(null)
 const transferLastUpdatedAt = ref<number>(0)
 
+const activeDetailTab = ref('overview')
 const activeNames = ref(['Read']) // Optimized: Only open first group by default
+const videoActiveNames = ref(['Video'])
+const matlabParamGroups = computed(() => paramGroups.filter(group => group.key !== 'Video'))
+const videoParamGroups = computed(() => paramGroups.filter(group => group.key === 'Video'))
 const artifactsLoading = ref(false)
-const videoArtifacts = ref<{ path: string; name: string; label?: string }[]>([])
-const selectedVideoChannel = ref<'C01' | 'C02'>('C01')
+type VideoArtifact = {
+    path: string
+    name: string
+    label?: string
+    mime?: string
+    playable?: boolean
+    channel?: string | null
+    mode?: string | null
+}
+
+const videoArtifacts = ref<VideoArtifact[]>([])
+const selectedVideoChannel = ref<'C01' | 'C02' | 'MERGE'>('C01')
 
 const artifactLoadErrors = ref<string[]>([])
-const videoPlayer = ref<HTMLVideoElement | null>(null)
 const videoObjectUrl = ref<string>('')
 const videoLoadSeq = ref(0)
 const videoRetryCount = ref(0)
 let videoRetryTimer: any = null
+const nd2Metadata = ref<any>(null)
+const nd2PreviewLoading = ref(false)
+const nd2PreviewError = ref('')
+const nd2PreviewUrl = ref('')
+const nd2Series = ref(0)
+const nd2Z = ref(0)
+const nd2C = ref(0)
+const nd2C2 = ref(1)
+const nd2T = ref(0)
+const nd2Lut = ref('gray')
+const nd2Lut2 = ref('red')
+const nd2PreviewMode = ref<'single' | 'merge'>('single')
+const nd2PreviewQuality = ref<'fast' | 'full'>('fast')
+const nd2PreviewMaxPx = ref(512)
 
 const currentRunMode = computed(() => {
     if (currentRunId.value) {
@@ -475,27 +244,138 @@ const currentRunMode = computed(() => {
     return 'unknown'
 })
 
-const toggleFullscreen = () => {
-    if (videoPlayer.value) {
-        if (document.fullscreenElement) {
-            document.exitFullscreen()
-        } else {
-            videoPlayer.value.requestFullscreen()
-        }
-    }
-}
-
 const currentVideo = computed(() => {
-    if (!videoArtifacts.value.length) return null
-    if (selectedVideoChannel.value === 'C01') {
-        return videoArtifacts.value.find(v => /refC01|C01/i.test(v.name)) ?? videoArtifacts.value[0]
+    const playable = videoArtifacts.value.filter(v => v.playable !== false)
+    if (!playable.length) return null
+    if (selectedVideoChannel.value === 'MERGE') {
+        return playable.find(v => v.mode === 'merge' || /merge/i.test(v.name)) ?? playable[0]
     }
-    return videoArtifacts.value.find(v => /othC02|C02/i.test(v.name)) ?? videoArtifacts.value[0]
+    if (selectedVideoChannel.value === 'C01') {
+        return playable.find(v => v.channel === 'C01' || /refC01|C01/i.test(v.name)) ?? playable[0]
+    }
+    return playable.find(v => v.channel === 'C02' || /othC02|C02/i.test(v.name)) ?? playable[0]
 })
 
 const currentVideoUrl = computed(() => videoObjectUrl.value)
 
 const currentVideoName = computed(() => currentVideo.value?.name ?? '')
+const currentVideoMime = computed(() => currentVideo.value?.mime || 'video/mp4')
+const downloadOnlyVideos = computed(() => videoArtifacts.value.filter(v => v.playable === false))
+const hasMergeVideo = computed(() => videoArtifacts.value.some(v => v.mode === 'merge' || /merge/i.test(v.name)))
+const nd2SeriesOptions = computed(() => Array.isArray(nd2Metadata.value?.series) ? nd2Metadata.value.series : [])
+const nd2CurrentSeries = computed(() => nd2SeriesOptions.value.find((s: any) => s.index === nd2Series.value) || nd2SeriesOptions.value[0])
+const nd2MaxZ = computed(() => Math.max(0, Number(nd2CurrentSeries.value?.size_z || 1) - 1))
+const nd2MaxT = computed(() => Math.max(0, Number(nd2CurrentSeries.value?.size_t || 1) - 1))
+const nd2ChannelOptions = computed(() => {
+    const channels = Array.isArray(nd2CurrentSeries.value?.channels) ? nd2CurrentSeries.value.channels : []
+    if (channels.length) {
+        return channels.map((ch: any, idx: number) => {
+            const oneBased = Number(ch.index || idx + 1)
+            const name = ch.name || `C${String(oneBased).padStart(2, '0')}`
+            return { value: Math.max(0, oneBased - 1), label: `C${String(oneBased).padStart(2, '0')} ${name}` }
+        })
+    }
+    const n = Math.max(1, Number(nd2CurrentSeries.value?.size_c || 1))
+    return Array.from({ length: n }, (_, idx) => ({ value: idx, label: `C${String(idx + 1).padStart(2, '0')}` }))
+})
+
+const formatNd2SeriesLabel = (s: any) => {
+    const idx = Number(s?.index ?? 0)
+    const xy = `XY${String(idx + 1).padStart(3, '0')}`
+    const name = s?.name && !String(s.name).startsWith('Series ') ? ` · ${s.name}` : ''
+    const size = s?.size_x && s?.size_y ? ` · ${s.size_x}x${s.size_y}` : ''
+    return `${xy}${name}${size}`
+}
+
+const normalizeNd2PreviewControls = () => {
+    nd2Z.value = Math.min(Math.max(0, nd2Z.value || 0), nd2MaxZ.value)
+    nd2T.value = Math.min(Math.max(0, nd2T.value || 0), nd2MaxT.value)
+    const values = nd2ChannelOptions.value.map((ch: any) => ch.value)
+    if (!values.includes(nd2C.value)) nd2C.value = values[0] ?? 0
+    if (!values.includes(nd2C2.value)) nd2C2.value = values.find((v: number) => v !== nd2C.value) ?? values[0] ?? 0
+    if (nd2PreviewMode.value === 'merge' && values.length < 2) {
+        nd2PreviewMode.value = 'single'
+    }
+}
+
+const loadNd2Metadata = async () => {
+    try {
+        const res = await http.get(`/tasks/${taskId}/nd2/metadata`, { timeout: 180000 })
+        nd2Metadata.value = res.data
+        const first = nd2SeriesOptions.value[0]
+        if (first) {
+            nd2Series.value = first.index
+            nd2Z.value = 0
+            nd2C.value = 0
+            nd2C2.value = Math.max(0, Math.min(1, Number(first.size_c || 1) - 1))
+            nd2T.value = 0
+            nd2PreviewQuality.value = 'fast'
+        }
+        normalizeNd2PreviewControls()
+        nd2PreviewError.value = ''
+        await loadNd2Preview()
+    } catch (e: any) {
+        nd2PreviewError.value = e?.response?.data?.detail || e?.message || 'ND2 preview is not available'
+    }
+}
+
+const loadNd2Preview = async () => {
+    nd2PreviewLoading.value = true
+    try {
+        const res = await http.get(`/tasks/${taskId}/nd2/preview`, {
+            params: {
+                series: nd2Series.value,
+                z: nd2Z.value,
+                c: nd2C.value,
+                c2: nd2C2.value,
+                t: nd2T.value,
+                mode: nd2PreviewMode.value,
+                lut: nd2Lut.value,
+                lut2: nd2Lut2.value,
+                quality: nd2PreviewQuality.value,
+                max_px: nd2PreviewMaxPx.value,
+            },
+            responseType: 'blob',
+            timeout: 180000,
+        })
+        if (nd2PreviewUrl.value) {
+            try {
+                URL.revokeObjectURL(nd2PreviewUrl.value)
+            } catch (e) {
+            }
+        }
+        nd2PreviewUrl.value = URL.createObjectURL(res.data)
+        nd2PreviewError.value = ''
+    } catch (e: any) {
+        nd2PreviewError.value = e?.response?.data?.detail || e?.message || 'Failed to load ND2 preview'
+    } finally {
+        nd2PreviewLoading.value = false
+    }
+}
+
+const loadNd2FastPreview = () => {
+    nd2PreviewQuality.value = 'fast'
+    loadNd2Preview()
+}
+
+const loadNd2FullPreview = () => {
+    nd2PreviewQuality.value = 'full'
+    loadNd2Preview()
+}
+
+const onNd2PreviewControlChange = () => {
+    normalizeNd2PreviewControls()
+    loadNd2FastPreview()
+}
+
+const onNd2SeriesChange = () => {
+    nd2Z.value = 0
+    nd2T.value = 0
+    nd2C.value = 0
+    nd2C2.value = nd2ChannelOptions.value.length > 1 ? nd2ChannelOptions.value[1].value : 0
+    normalizeNd2PreviewControls()
+    loadNd2FastPreview()
+}
 
 watch([() => currentVideo.value?.path, currentRunId], async () => {
     videoRetryCount.value = 0
@@ -538,11 +418,6 @@ const transferVisible = computed(() => {
     if (state && state !== 'unknown') return true
     if (partMinio > 0 || part > 0) return true
     return !!currentRunId.value
-})
-const transferCanCancel = computed(() => {
-    const state = transferState.value
-    if (!currentRunId.value) return false
-    return state === 'transferring' || state === 'queued' || (transferPercent.value !== null && transferPercent.value < 100)
 })
 const transferTagType = computed(() => {
     const state = transferState.value
@@ -618,6 +493,25 @@ const transferDetailText = computed(() => {
     if (msg) bits.push(msg)
     return bits.join(' · ')
 })
+const coldArchiveDetailText = computed(() => {
+    const cold = transfer.value?.cold_archive
+    if (!cold) return ''
+    const state = String(cold.state || 'unknown')
+    const done = cold.bytes_done
+    const total = cold.bytes_total
+    const msg = typeof cold.message === 'string' ? cold.message : ''
+    const bits: string[] = []
+    if (state === 'completed' && cold.verified) bits.push('已完成并校验')
+    else if (state === 'copying') bits.push('后台复制中')
+    else if (state === 'queued') bits.push('等待复制')
+    else if (state === 'failed') bits.push('失败，热盘文件会保留')
+    else bits.push(state)
+    if (typeof done === 'number' || typeof total === 'number') {
+        bits.push(`${formatBytes(done)} / ${formatBytes(total)}`)
+    }
+    if (msg) bits.push(msg)
+    return bits.join(' · ')
+})
 
 const handleVideoError = () => {
     artifactLoadErrors.value.push('Video playback failed (network or file missing).')
@@ -655,12 +549,6 @@ const loadCurrentVideo = async () => {
             }
         }
         videoObjectUrl.value = URL.createObjectURL(res.data)
-        nextTick(() => {
-            try {
-                videoPlayer.value?.load()
-            } catch (e) {
-            }
-        })
     } catch (e: any) {
         artifactLoadErrors.value.push(e?.response?.data?.detail || e?.message || 'Failed to load video')
     }
@@ -675,7 +563,9 @@ const fetchArtifacts = async () => {
         const res = await http.get(`/tasks/${taskId}/artifacts/list`, { params })
         videoArtifacts.value = Array.isArray(res.data?.videos) ? res.data.videos : []
 
-        if (videoArtifacts.value.length && selectedVideoChannel.value === 'C02') {
+        if (hasMergeVideo.value && currentRunMode.value === 'video') {
+            selectedVideoChannel.value = 'MERGE'
+        } else if (videoArtifacts.value.length && selectedVideoChannel.value === 'C02') {
             selectedVideoChannel.value = 'C01'
         }
         videoRetryCount.value = 0
@@ -689,64 +579,6 @@ const fetchArtifacts = async () => {
 
 const retryFetchArtifacts = async () => {
     await fetchArtifacts()
-}
-
-// Accessors for Template
-const getParamValue = (groupKey: string, paramKey: string) => {
-    // Full path is groupKey + '.' + paramKey
-    // Exception: If paramKey starts with 'Opts.', it's nested inside groupKey.Opts... which matches logical structure.
-    // Actually, backend structure is flat for some, nested for others.
-    // Based on MATLAB struct: Cfg.Read.SelectXYs, Cfg.Detect.Opts.bin.sigma
-    // So groupKey is top level.
-    if (!params.value[groupKey]) return undefined
-    return getNestedValue(params.value[groupKey], paramKey)
-}
-
-const setParamValue = (groupKey: string, paramKey: string, val: any) => {
-    if (!params.value[groupKey]) params.value[groupKey] = {}
-    setNestedValue(params.value[groupKey], paramKey, val)
-}
-
-const getArrayValueStr = (groupKey: string, paramKey: string) => {
-    const val = getParamValue(groupKey, paramKey)
-    if (Array.isArray(val)) return val.join(', ')
-    return ''
-}
-
-const setArrayValueStr = (groupKey: string, paramKey: string, valStr: string, type: 'number' | 'string') => {
-    if (!valStr.trim()) {
-        setParamValue(groupKey, paramKey, [])
-        return
-    }
-    const arr = valStr.split(',').map(s => s.trim()).filter(s => s !== '')
-    if (type === 'number') {
-        const numArr = arr.map(Number).filter(n => !isNaN(n))
-        setParamValue(groupKey, paramKey, numArr)
-    } else {
-        setParamValue(groupKey, paramKey, arr)
-    }
-}
-
-// --- Buffered Input Logic for Arrays ---
-const inputBuffer = ref<Record<string, string>>({})
-const getUniqueKey = (g: string, p: string) => `${g}.${p}`
-
-const getInputValue = (groupKey: string, paramKey: string) => {
-    const k = getUniqueKey(groupKey, paramKey)
-    if (inputBuffer.value[k] !== undefined) return inputBuffer.value[k]
-    return getArrayValueStr(groupKey, paramKey)
-}
-
-const onInputValue = (groupKey: string, paramKey: string, val: string) => {
-    const k = getUniqueKey(groupKey, paramKey)
-    inputBuffer.value[k] = val
-}
-
-const onInputBlur = (groupKey: string, paramKey: string, val: string, type: 'number' | 'string') => {
-    setArrayValueStr(groupKey, paramKey, val, type)
-    const k = getUniqueKey(groupKey, paramKey)
-    // Clear buffer so input reverts to formatted value from store
-    delete inputBuffer.value[k]
 }
 
 const resetToDefaults = async () => {
@@ -1006,6 +838,23 @@ const runFinal = async () => {
     }
 }
 
+const runVideo = async () => {
+    await saveParams()
+    try {
+        const res = await http.post(`/tasks/${taskId}/video/run`)
+        currentRunId.value = res.data.run_id
+        logs.value = ''
+        videoArtifacts.value = []
+        startLogPolling()
+        ElMessage.success('视频任务已进入队列')
+        fetchParams()
+        fetchHistory()
+    } catch (e: any) {
+        console.error(e)
+        ElMessage.error('Failed to start video generation: ' + (e.response?.data?.detail || e.message))
+    }
+}
+
 const stopTask = async () => {
     try {
         await http.post(`/tasks/${taskId}/stop`)
@@ -1051,25 +900,14 @@ const stopTransferPolling = () => {
     transferInterval = null
 }
 
-const cancelNd2Transfer = async () => {
-    if (!currentRunId.value) return
+const filenameFromDisposition = (disposition: any, fallback: string) => {
+    const value = typeof disposition === 'string' ? disposition : ''
+    const match = value.match(/filename\*?=(?:UTF-8''|")?([^";]+)/i)
+    if (!match) return fallback
     try {
-        await ElMessageBox.confirm('确认取消当前 ND2 文件传输？', '取消传输', {
-            confirmButtonText: '取消传输',
-            cancelButtonText: '返回',
-            type: 'warning',
-        })
+        return decodeURIComponent(match[1].replace(/"/g, ''))
     } catch {
-        return
-    }
-    try {
-        await http.post(`/tasks/${taskId}/transfer/cancel`, { run_id: currentRunId.value })
-        ElMessage.success('已发送取消请求')
-        fetchTransferStatus()
-        fetchParams()
-        fetchHistory()
-    } catch (e: any) {
-        ElMessage.error('取消失败: ' + (e.response?.data?.detail || e.message))
+        return match[1].replace(/"/g, '')
     }
 }
 
@@ -1083,6 +921,26 @@ const downloadPreview = () => {
             const a = document.createElement('a')
             a.href = blobUrl
             a.download = 'preview.mp4'
+            document.body.appendChild(a)
+            a.click()
+            a.remove()
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 2000)
+        })
+        .catch((e: any) => {
+            ElMessage.error(e?.response?.data?.detail || e?.message || 'Download failed')
+        })
+}
+
+const downloadAllResults = () => {
+    const params: any = {}
+    if (currentRunId.value) params.run_id = currentRunId.value
+    http
+        .get(`/tasks/${taskId}/artifacts/archive`, { params, responseType: 'blob' })
+        .then((res) => {
+            const blobUrl = URL.createObjectURL(res.data)
+            const a = document.createElement('a')
+            a.href = blobUrl
+            a.download = filenameFromDisposition(res.headers?.['content-disposition'], 'results.zip')
             document.body.appendChild(a)
             a.click()
             a.remove()
@@ -1153,11 +1011,6 @@ const fetchLogs = async () => {
             logs.value = effective
             stallWarning.value = ''
             lastLogChangeAt.value = Date.now()
-            nextTick(() => {
-                if (logContainer.value) {
-                    logContainer.value.scrollTop = logContainer.value.scrollHeight
-                }
-            })
         } else if (isRunning.value) {
             const idleMs = Date.now() - lastLogChangeAt.value
             if (idleMs > 60_000 && !stallWarning.value) {
@@ -1187,7 +1040,7 @@ const pollStatus = () => {
         }
     }
     // Check if artifacts need fetching
-    if (currentRunStatus.value === 'SUCCEEDED' && currentRunMode.value === 'final' && !videoArtifacts.value.length) {
+    if (currentRunStatus.value === 'SUCCEEDED' && ['debug', 'final', 'video'].includes(currentRunMode.value) && !videoArtifacts.value.length) {
          fetchArtifacts()
     }
 }
@@ -1235,6 +1088,7 @@ onMounted(() => {
     fetchHistory()
     fetchTransferStatus()
     fetchDemos()
+    loadNd2Metadata()
 })
 
 onUnmounted(() => {
@@ -1249,6 +1103,13 @@ onUnmounted(() => {
         }
     }
     videoObjectUrl.value = ''
+    if (nd2PreviewUrl.value) {
+        try {
+            URL.revokeObjectURL(nd2PreviewUrl.value)
+        } catch (e) {
+        }
+    }
+    nd2PreviewUrl.value = ''
 })
 </script>
 
@@ -1266,15 +1127,36 @@ onUnmounted(() => {
     justify-content: space-between;
     align-items: center;
 }
-.run-controls {
-    margin-top: 30px;
-}
-.control-row {
+
+.actions {
     display: flex;
+    gap: 10px;
     align-items: center;
-    gap: 20px;
 }
-.param-editor {
-    margin-bottom: 30px;
+
+.detail-tabs {
+    background: #fff;
+    padding: 0 18px 18px;
+    border-radius: 6px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+}
+
+.section-card {
+    margin-top: 18px;
+}
+
+.terminal-card {
+    margin-top: 20px;
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.terminal-output {
+    height: 300px;
+    overflow-y: auto;
+    font-family: Consolas, Monaco, monospace;
+    white-space: pre-wrap;
+    font-size: 12px;
+    line-height: 1.4;
 }
 </style>

@@ -39,6 +39,11 @@ class Task(Base):
     run_id_current = Column(UUID(as_uuid=True))
     result_csv_key = Column(String)
     last_preview_key = Column(String)
+
+    nd2_local_path = Column(Text)
+    nd2_local_bytes = Column(BigInteger)
+    nd2_local_saved_at = Column(DateTime)
+    nd2_local_deleted_at = Column(DateTime)
     
     # Task Queue fields
     priority = Column(Integer, default=0)
@@ -55,11 +60,13 @@ class TaskRun(Base):
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     task_id = Column(String(32), ForeignKey("tasks.id"))
-    run_mode = Column(String) # debug, final
+    run_mode = Column(String) # debug, final, video
     status = Column(String, default="QUEUED") # QUEUED, RUNNING, SUCCEEDED, FAILED, CANCELED
     params_snapshot = Column(JSONB) # Snapshot of parameters for this run
     started_at = Column(DateTime, nullable=True) # Actual start time
     created_at = Column(DateTime, default=datetime.utcnow)
+    run_dir_archive = Column(Text)
+    archived_at = Column(DateTime, nullable=True)
     task = relationship("Task", back_populates="runs")
 
 class TaskArtifact(Base):
