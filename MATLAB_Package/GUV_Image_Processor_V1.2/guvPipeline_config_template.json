@@ -77,6 +77,9 @@
     "DistGate_um": 8,
     "MaxGap": 2,
     "MinLen": 10,
+    "StartFrame": [],
+    "EndFrame": [],
+    "FrameRange": [],
     "Opts": {
       "DistGate_um": 8,
       "MaxGap": 2,

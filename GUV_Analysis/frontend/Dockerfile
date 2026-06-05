@@ -1,16 +1,16 @@
 # 构建阶段
-FROM node:20-alpine as build-stage
+FROM docker.1ms.run/node:20-alpine as build-stage
 
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm install
+RUN npm config set registry https://registry.npmmirror.com && npm install
 
 COPY . .
 RUN npm run build
 
 # 生产运行阶段
-FROM nginx:stable-alpine as production-stage
+FROM docker.1ms.run/nginx:stable-alpine as production-stage
 
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf

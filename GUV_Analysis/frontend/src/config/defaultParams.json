@@ -75,6 +75,9 @@
     "DistGate_um": 8,
     "MaxGap": 2,
     "MinLen": 10,
+    "StartFrame": [],
+    "EndFrame": [],
+    "FrameRange": [],
     "Opts": {
       "DistGate_um": 8,
       "MaxGap": 2,
@@ -132,11 +135,13 @@
     "When": "after",
     "Format": "mp4",
     "FPS": 10,
+    "MaxPx": 720,
     "Quality": 90,
     "Tasks": [
       "Merge"
     ],
     "SeriesList": [],
+    "FrameRange": [],
     "UseFrameStoreOnly": false,
     "OutputSubdir": "Video",
     "Contrast": {
@@ -160,6 +165,7 @@
       "Length_um": 50,
       "Thickness_px": 6,
       "Position": [],
+      "PixelSize_um": [],
       "FontSize": 48,
       "Color": [
         1,
@@ -181,7 +187,8 @@
         1,
         1
       ],
-      "Unit": "min"
+      "Unit": "min",
+      "ShowFrameNumber": true
     }
   }
 }

@@ -489,7 +489,12 @@ ok = false;
 msg = '';
 crf = max(0, min(51, round(double(crf))));
 preset = char(preset);
-cmd = sprintf('ffmpeg -y -loglevel error -i \"%s\" -c:v libx264 -preset %s -crf %d -pix_fmt yuv420p -r %g \"%s\"', inAvi, preset, crf, fps, outMp4);
+ffmpegBin = getenv('FFMPEG_BIN');
+if isempty(ffmpegBin)
+    ffmpegBin = '/usr/bin/ffmpeg';
+end
+cmd = sprintf('env -u LD_LIBRARY_PATH -u LD_PRELOAD \"%s\" -y -loglevel error -i \"%s\" -c:v libx264 -preset %s -crf %d -pix_fmt yuv420p -r %g \"%s\"', ...
+    ffmpegBin, inAvi, preset, crf, fps, outMp4);
 [st, out] = system(cmd);
 if st == 0
     ok = true;
